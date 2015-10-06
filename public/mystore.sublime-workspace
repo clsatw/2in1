@@ -1,0 +1,592 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"$lo",
+				"$locationProvider	AngularJS"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "<style>\n	.navbar-right { float: right !important; margin-right: 5px; }\n	.navbar-text { margin-right: 10px; }\n</style>\n\n<div class=\"navbar-right\">\n	<div class=\"navbar-text\">\n		<b>Your cart:</b>\n		{{itemCount()}} item(s),\n		{{total() | currency}}\n	</div>\n	<a href=\"#/checkout\" class=\"btn btn-info btn-lg\">\n		<span class=\"glyphicon glyphicon-shopping-cart\"></span> Checkout\n	</a>                \n</div>",
+			"file": "components/cart/cartSummary.html",
+			"file_size": 457,
+			"file_write_time": 130882754928228437,
+			"settings":
+			{
+				"buffer_size": 399,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<main class=\"row\" ng-controller=\"productListCtrl\" ng-hide=\"data.error\">\n<aside class=\"col-md-2\">\n    <a ng-click=\"selectCategory()\"\n    class=\"btn btn-block btn-primary btn-lg\">Home</a>\n    <a ng-repeat=\"item in data.products | orderBy:'category' | unique:'category'\"\n        ng-click=\"selectCategory(item)\" class=\" btn btn-block btn-default btn-lg\"\n        ng-class=\"getCategoryClass(item)\">\n        {{item}}\n    </a>\n</aside>\n<div class='col-md-10'>\n    <section class=\"ngFade\" ng-repeat=\"item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize\">\n        <table class='table table-responsive'>\n            <tbody>\n                <tr>\n                    <td>\n                        <a href='#' class='thumbnail'>\n                            <img ng-src=\"{{item.imgUrl}}\" width = '180px'height=\"auto\">\n                        </a>\n                        <!-- <pre>{{item.imgUrl}}</pre> -->\n                    </td>\n                    \n                    <td><h2><strong>{{item.name}}</strong></h2></td>\n                    <td><h4><details><p>{{item.description}}</p></details></h4></td>\n                    <td>\n                        <h4><mark>\n                        <em>{{item.price | currency}}</em>\n                        </mark></h4>\n                    </td>\n                    <td>\n                        <form class='form-horizontal' role='form' ng-submit=\"addProductToCart(item)\">\n                            <div class=\"form-group form-group-sm\">\n                                <label>qty: </label>\n                                <input name='qty' type='number' ng-model='qty' min='1' max='9' value=1  size='1'/>\n                                <button type='submit' class=\"btn btn-success\">Add to cart</button>\n                            </div>\n                        </form>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n    </section>\n    \n    <footer class=\"pull-right btn-group\">\n        <a ng-repeat=\"page in data.products | filter:categoryFilterFn | pageCount:pageSize\"\n            ng-click=\"selectPage($index + 1)\" class=\"btn btn-default\"\n            ng-class=\"getPageClass($index + 1)\">\n            {{$index + 1}}\n        </a>\n    </footer>\n</div>\n</main>",
+			"file": "views/productList.html",
+			"file_size": 2336,
+			"file_write_time": 130885680973520740,
+			"settings":
+			{
+				"buffer_size": 2254,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<!DOCTYPE html>\n<html ng-app=\"sportsStore\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <title>Markie Store</title>\n        <script src=\"./bower_components/angular/angular.js\"></script>\n        <script src=\"./bower_components/angular-animate/angular-animate.js\"></script>\n        <script src=\"./bower_components/angular-route/angular-route.js\"></script>\n        <script src=\"./bower_components/angular-resource/angular-resource.js\"></script>\n        \n        <link href=\"./bower_components/bootstrap/dist/css/bootstrap.css\" rel=\"stylesheet\"/>\n        <link href=\"./bower_components/bootstrap/dist/css/bootstrap-theme.css\" rel=\"stylesheet\"/>\n        <link href=\"./css/mycss.css\" rel='stylesheet'/>\n        \n        <script src=\"controllers/sportsStore.js\"></script>\n        <script src=\"filters/customFilters.js\"></script>\n        <script src=\"controllers/productListControllers.js\"></script>\n        <script src=\"components/increment.js\"></script>\n        <script src=\"components/cart/cart.js\"></script>\n        <script src=\"controllers/checkoutControllers.js\"></script>\n        \n    </head>\n    <body ng-controller=\"sportsStoreCtrl\">\n        <header class='container'>\n            <div class=\"navbar navbar-fixed-top\">\n                <a class=\"navbar-brand\" href=\"#\">MARKIE STORE</a>\n                <cart-summary />\n            </div>\n        </header>\n        <section class='container'>\n            <div class=\"alert alert-danger\" ng-show=\"data.error\">\n                Error ({{data.error.status}}). The product data was not loaded.\n                <a href=\"/index.html\" class=\"alert-link\">Click here to try again</a>\n            </div>\n            \n            <div ng-view class=\"ngFade\"></div>\n            \n        </section>\n        <footer class='container'>\n            <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>\n            <address>\n                <strong>Immortal Roach, Inc.</strong><br>\n                1355 Market Street, Suite 900 San Francisco, CA 94103<br>\n            <abbr title=\"Phone\">P:</abbr> (123) 456-7890\n        </address>\n        <address>\n            <strong>Mark Huang </strong><a href=\"mailto:#\">roach.huang@hotmail.com</a>\n        </address>\n    </footer>\n    \n</body>\n</html>",
+			"file": "index.html",
+			"file_size": 3437,
+			"file_write_time": 130885834408725964,
+			"settings":
+			{
+				"buffer_size": 2379,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nSublimeGit\n----------\n\n  Welcome to SublimeGit\n  =====================\n  \n  SublimeGit is a full-featured, commercial plugin for integrating\n  git into Sublime Text 2 and 3. To read more about it, or purchase\n  a license, go to https://sublimegit.net.\n  \n  \n  Quickstart\n  ----------\n  Make sure to restart Sublime Text after installing SublimeGit.\n  \n  Run the command \"Git: Status\" to open the status view. This\n  is where you'll spend most of the time when interacting with\n  git through SublimeGit. From here you can stage/unstage files,\n  manage stashes, view diffs, and initiate a commit.\n  \n  Other commands are available in the command palette (cmd+shift+p\n  on OS X, ctrl+shift+p on Windows/Linux). They are all prefixed\n  with \"Git:\" and most of them do exactly what it says on the label.\n  \n  \n  Tutorial\n  --------\n  For the full tutorial, go to:\n  \n      https://docs.sublimegit.net/tutorial.html\n  \n  \n  Trouble Getting Started?\n  ------------------------\n  If you are on windows, or don't usually use git from the command\n  line, there might be some things you'll need to set up. Go here\n  for instructions on how to get set up:\n  \n      https://docs.sublimegit.net/quickstart.html\n  \n  \n  Issues, Questions or Bugs?\n  --------------------------\n  Send a mail to support@sublimegit.net, or report it in the issue\n  tracker:\n  \n      https://github.com/SublimeGit/SublimeGit/issues\n",
+			"settings":
+			{
+				"buffer_size": 1447,
+				"line_ending": "Windows",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"file": "products.js",
+			"settings":
+			{
+				"buffer_size": 2188,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "angular.module(\"sportsStore\", [\"customFilters\", \"cart\", \"ngResource\", \"ngRoute\", \"ngAnimate\"])\n    .constant(\"dataUrl\", \"http://localhost:3000/api/prods\")\n    .constant('baseUrl', 'http://localhost:3000/')\n    .config(function($routeProvider, $locationProvider) {\n        $locationProvider.html5Mode({\n            enabled: true,\n            requireBase: false\n        });\n        $routeProvider.when(\"/complete\", {\n            templateUrl: \"/views/thankYou.html\"\n        });\n        $routeProvider.when(\"/placeorder\", {\n            templateUrl: \"/views/placeOrder.html\"\n        });\n        $routeProvider.when(\"/checkout\", {\n            templateUrl: \"/views/checkoutSummary.html\"\n        });\n        // customers need logon before checkout\n        /*\n        $routeProvider.when(\"/checkout\", {\n        templateUrl: \"./views/login.html\"\n        });\n        */\n        $routeProvider.when(\"/products\", {\n            templateUrl: \"/views/productList.html\"\n        });\n        $routeProvider.otherwise({\n            templateUrl: \"/views/productList.html\"\n        });\n    })\n    .controller(\"sportsStoreCtrl\", function($scope, $resource, $http, $location, dataUrl) {\n        // isArry: true to specifies that the response will be json (from mongodb)\n        //$scope.productsResource = $resource(dataUrl);  \n        $scope.data = {};\n        //$scope.data.products = $scope.productsResource.query();\n        /*\n        $scope.productsResource = $resource(dataUrl + \":id\", {\n            id: \"@id\"\n        }, {\n            create: {\n                method: \"POST\"\n            },\n            save: {\n                method: \"PUT\"\n            }\n        });\n        */\n        //$scope.products = $scope.productsResource.query();\n\n        $http.get(dataUrl)\n            .success(function(data) {\n                $scope.data.products = data;\n            })\n            .error(function(error) {\n                $scope.data.error = error;\n            });\n\n    });",
+			"file": "controllers/sportsStore.js",
+			"file_size": 2011,
+			"file_write_time": 130885937666437621,
+			"settings":
+			{
+				"buffer_size": 1950,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/mycss.css",
+			"settings":
+			{
+				"buffer_size": 1421,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/locallogin.html",
+			"settings":
+			{
+				"buffer_size": 802,
+				"line_ending": "Windows",
+				"name": "<div class=\"well\" ng-controller=\"authCtrl\">"
+			}
+		},
+		{
+			"file": "views/auth.html",
+			"settings":
+			{
+				"buffer_size": 585,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 490.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 703.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/F/web/apps/2in1",
+		"/F/web/apps/2in1/public",
+		"/F/web/apps/2in1/public/components",
+		"/F/web/apps/2in1/public/components/cart",
+		"/F/web/apps/2in1/public/controllers",
+		"/F/web/apps/2in1/public/css",
+		"/F/web/apps/2in1/public/views"
+	],
+	"file_history":
+	[
+		"/F/web/apps/2in1/public/mystore.sublime-project",
+		"/F/web/apps/2in1/public/index.html",
+		"/C/Users/roac/AppData/Roaming/Sublime Text 3/Packages/HTMLBeautify/HTMLBeautify.sublime-settings",
+		"/C/Users/roac/AppData/Roaming/Sublime Text 3/Packages/User/HTMLBeautify.sublime-settings",
+		"/F/web/apps/2in1/public/bootstrap-theme.css",
+		"/F/web/books/Pro JavaScript for Web Apps.pdf",
+		"/F/web/apps/2in1/config/appid.js",
+		"/F/web/apps/2in1/config/mongoose.js",
+		"/F/web/apps/scope/one.js",
+		"/F/web/apps/scope/tree.js",
+		"/F/web/apps/scope/two.js",
+		"/F/web/apps/2in1/public/auth.html",
+		"/F/web/apps/2in1/public/angular-resource.js",
+		"/F/web/apps/2in1/routes/auth.js",
+		"/C/Users/roac/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/F/web/apps/2in1/config/env/development.js",
+		"/F/web/apps/2in1/public/increment.js",
+		"/F/web/apps/mongoose/lib/speaker.js",
+		"/C/Users/roac/AppData/Roaming/Sublime Text 3/Packages/User/Package Control.sublime-settings",
+		"/C/Users/roac/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings"
+	],
+	"find":
+	{
+		"height": 43.0
+	},
+	"find_in_files":
+	{
+		"height": 117.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"black",
+			"red",
+			"localtion",
+			"view",
+			"logout",
+			"redir",
+			"profile",
+			"User.save",
+			"User",
+			"auth.html",
+			"new"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "components/cart/cartSummary.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 399,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								399,
+								399
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "views/productList.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2254,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1296,
+								1296
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 300.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								850,
+								850
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 322.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1447,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1447,
+								1447
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"colorcode": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "products.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								409,
+								364
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "controllers/sportsStore.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1950,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								581,
+								581
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "css/mycss.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1417,
+								1417
+							]
+						],
+						"settings":
+						{
+							"colorcode": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1340.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "views/locallogin.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 802,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								802,
+								802
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<div class=\"well\" ng-controller=\"authCtrl\">",
+							"colorcode": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "views/auth.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 585,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								573,
+								573
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"colorcode": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "mystore.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 324.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

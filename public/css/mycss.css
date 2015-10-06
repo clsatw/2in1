@@ -1,0 +1,91 @@
+
+.ngFade.ng-enter { transition: 0.4s linear all; opacity: 0; }
+.ngFade.ng-enter-active { opacity: 1; }
+.ngFade.ng-leave { transition: 0.4s linear all; opacity: 1; }
+.ngFade.ng-leave-active { opacity: 0; }
+
+/* code school */
+body {
+	font-size: 14px;
+	padding: 20px 20px 20px 20px;
+	padding-top: 70px;
+}
+
+h1 {
+	margin: 10px 0 15px 0;
+	padding: 0 0 0 50px;
+}
+ol {
+	padding: 0 0 0 50px;
+}
+ul {
+	padding: 0 0 0 50px;
+}
+h2 {
+	margin: 10px 0 20px 0;
+}
+h3 {
+	margin: 15px 0 15px 0;
+	border-bottom: 1px solid #cccccc;
+	padding-bottom: 3px;
+}
+.nav {
+	padding-left: 0;
+}
+.nav a {
+	color: red;
+	text-decoration: none;
+}
+.header img {
+	display: block;
+	margin: 0 auto 0 auto;
+}
+img {
+	max-width: 120px;
+	height: auto;
+	display: inline-block;
+}
+.img-responsive {
+	margin: 0px auto;
+	border:3px solid darkblue;
+	box-shadow: rgba(0,0,0,0.5) 10px 10px 60px);
+}
+.features .glyphicon {
+	font-size: 32px;
+	color: marron;
+}
+footer {
+	margin: 10px;
+	background-color: #6ed3cf;
+}
+.footer p {
+	background-color: yellow;
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+	font-style: italic;
+	text-transform: uppercase;
+}
+/*
+input {
+	width: 500px;
+	margin-bottom: 25px;
+}
+input[type=submit] {
+	width: 120px;
+	font-size: 30px;
+}
+*/
+/* end of code school */
+
+.container {
+	/* background-color:white; */
+}
+aside {	
+	/* background-color: #337ab7; */
+	padding: 10px;
+	background-color: #9068be
+}
+.navbar-fixed-top{
+	background-color: navy;
+}

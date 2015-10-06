@@ -1,0 +1,57 @@
+﻿
+<main class="row" ng-controller="productListCtrl" ng-hide="data.error">
+    <aside class="col-md-2">
+        <a ng-click="selectCategory()"
+           class="btn btn-block btn-primary btn-lg">Home</a>
+        <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
+           ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg"
+           ng-class="getCategoryClass(item)">
+            {{item}}
+        </a>
+    </aside>
+
+    <div class='col-md-10'>
+        <section class="ngFade" ng-repeat="item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize">
+        <table class='table table-responsive'>
+            <tbody>
+            <tr>
+                <td>
+                <a href='#' class='thumbnail'>
+                    <img ng-src="{{item.imgUrl}}" width = '180px'height="auto">
+                </a>
+                <!-- <pre>{{item.imgUrl}}</pre> -->
+                </td>      
+      
+                <td><h2><strong>{{item.name}}</strong></h2></td>
+
+                <td><h4><details><p>{{item.description}}</p></details></h4></td>
+                <td>
+                    <h4><mark>
+                    <em>{{item.price | currency}}</em>
+                    </mark></h4>
+                </td>                                   
+                <td>   
+                    <form class='form-horizontal' role='form' ng-submit="addProductToCart(item)">
+                        <div class="form-group form-group-sm">
+                        <label>qty: </label>
+                        <input name='qty' type='number' ng-model='qty' min='1' max='9' value=1  size='1'/>
+                        <button type='submit' class="btn btn-success">Add to cart</button>
+                        </div>
+                    </form>    
+                </td>
+            </tr>                    
+           </tbody>
+        </table>
+        </section>
+        
+        <footer class="pull-right btn-group">
+            <a ng-repeat="page in data.products | filter:categoryFilterFn | pageCount:pageSize"
+               ng-click="selectPage($index + 1)" class="btn btn-default"
+               ng-class="getPageClass($index + 1)">
+                {{$index + 1}}
+            </a>
+        </footer>
+    </div>  
+</main>  
+
+
