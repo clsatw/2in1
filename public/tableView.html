@@ -23,7 +23,7 @@
                         Delete
                     </button>
                     <button class="btn btn-xs btn-primary"
-                            ng-click="editOrCreateProduct(item)">
+                            ng-click="editProduct(item)">
                         Edit
                     </button>
                     <increment item="item" property-name="price" restful="true"
@@ -34,6 +34,6 @@
     </table>
     <div>
         <button class="btn btn-primary" ng-click="listProducts()">Refresh</button>
-        <button class="btn btn-primary" ng-click="editOrCreateProduct()">New</button>
+        <a href='#/create' class="btn btn-primary">New</a>
     </div>
 </div>

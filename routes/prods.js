@@ -29,7 +29,7 @@ router.route('/')
 	.post(function(req, res) {
 		// create a new instance of the user model
 		var data = new Prods(req.body); // Prods is a schema constructor
-		console.log(data);   
+		//console.log(data);   
 
 		// save the data received
 		data.save(function(err) {
@@ -39,7 +39,7 @@ router.route('/')
 				return;
 			}
 			// give some success message
-			console.log(data);
+			//console.log(data);
 			res.status(201).json(data);
 		})
 	});
@@ -76,7 +76,8 @@ router.route('/:user_id')
 				if (err)
 					res.send(err);
 				// give some success message
-				res.json(data);
+				//res.json(data);
+				res.end();
 			});
 		})
 	})

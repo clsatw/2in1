@@ -47,7 +47,7 @@ img {
 }
 .img-responsive {
 	margin: 0px auto;
-	border:3px solid darkblue;
+	border:3px solid lightgrey;
 	box-shadow: rgba(0,0,0,0.5) 10px 10px 60px);
 }
 .features .glyphicon {
@@ -87,5 +87,5 @@ aside {
 	background-color: #9068be
 }
 .navbar-fixed-top{
-	background-color: navy;
+	background-color: yellow;
 }

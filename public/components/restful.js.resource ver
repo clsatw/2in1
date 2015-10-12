@@ -1,0 +1,56 @@
+/*
+Table 21-6. The Methods Supported by Resource Objects
+Name        Description
+$delete()   Deletes the object from the server; equivalent to calling $remove()
+$get()      Refreshes the object from the server, clearing any uncommitted local changes
+$remove()   Deletes the object from the server; equivalent to calling $delete()
+$save()     Saves the object to the server
+The $save method is the simplest to work with. Here is how I used it in the updateProduct behavior
+*/
+'use strict';
+angular.module("app.restful", ["ngResource"])
+    .constant("dataUrl", "http://localhost:3000/api/prods/")
+    .factory("dataFactory", dataFactory);
+
+dataFactory.$inject = ['dataUrl', '$resource'];
+
+function dataFactory(dataUrl, $resource) { 
+
+    var factory = {};
+    // isArry: true to specifies that the response will be json (from mongodb)
+    var dataResource = $resource(dataUrl + ":id", {id: "@id"}, {    
+            create: {
+                method: "POST"
+            },
+            update: {
+                method: "PUT"
+            }
+        });
+
+    factory.get = function() {
+        return dataResource.query();
+    }
+
+    factory.delete = function(product) {
+        // it is important to pass in product._id
+        return product.$delete({id: product._id});       
+    }
+
+    factory.create = function(product) {
+        new dataResource(product).$update().then(function(res) {
+            return res;
+        })   
+    };
+
+    factory.update = function(product) {
+        // return product.$update({id: product._id});
+        return product.$update({id: product._id}, function(res) {
+            console.log(res);
+        },
+        function(err) {
+            console.error(err);        
+        });         
+    }
+
+    return factory;   
+};
