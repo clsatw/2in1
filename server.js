@@ -1,10 +1,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';	// has to be before config coz config reads it
 var config = require('./config/config'),
-   
+	bodyParser = require('body-parser'),   
 	express = require('express'),
 	morgan = require('morgan'),
-	compress = require('compression'),
-	bodyParser = require('body-parser'),
+	compress = require('compression'),	
 	mongoose = require('mongoose'),
 	methodOverride = require('method-override'),
 	session = require('express-session'),
@@ -19,10 +18,8 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
 	app.use(compress());
 }
-
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+//var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 //app.use(methodOverride());
 
@@ -35,7 +32,7 @@ app.use(session({
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-app.use(express.static('./public'));
+app.use(express.static(__dirname + '/public'));
 
 var prods = require('./routes/prods');
 var auth = require('./routes/auth');
@@ -49,10 +46,12 @@ app.use(flash());
 app.use('/api/auth', auth);
 app.use('/api/prods', prods);
 
-mongoose.connect(config.db);
-// Check if MongoDB is running
-mongoose.connection.on('error', function() {
-	console.error('error: %s, MongoDB Connection Error. Make sure MongoDB is running. ', error);
+mongoose.connect(config.db, function(err) {
+	if(err) {
+        console.error('connection error', err);
+    } else {
+        console.log('connection successful');
+    }
 });
 
 app.listen(3000, function(req, res) {

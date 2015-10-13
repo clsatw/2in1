@@ -33,7 +33,8 @@ function dataFactory(dataUrl, $http) {
     };
 
     factory.update = function(product) {
-       return $http({method: 'PUT', url: dataUrl+product._id, data: product});
+        console.log(product);
+       return $http.put(dataUrl+product._id, product);
     }
 
     return factory;   

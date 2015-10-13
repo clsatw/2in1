@@ -1,5 +1,5 @@
 angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAnimate"])
-    .constant('baseUrl', 'http://localhost:3000/')    
+    //.constant('baseUrl', 'http://localhost:3000/')    
     .config(function($routeProvider, $locationProvider) {
         //$locationProvider.html5Mode({
             //enabled: true,
@@ -17,9 +17,13 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
         $routeProvider.when("/products", {
             templateUrl: "../views/productList.html"
         });
-         $routeProvider.when("/auth", {
+        $routeProvider.when("/auth", {
             templateUrl: "../views/auth.html"
         });
+        $routeProvider.when('/getUserProfile', {
+             controller: 'app.authCtrl',
+            templateUrl: '../views/userprofile.html'           
+        })
         $routeProvider.otherwise({
             templateUrl: "../views/productList.html"
         });
@@ -28,7 +32,7 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
         $scope.data = {};
-        $scope.user = {};
+        //$scope.user = {};
         $scope.order = {};
         dataFactory.get().success(function(res) {
             $scope.data.products = res;

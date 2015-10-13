@@ -1,3 +1,7 @@
-bower_components
+bower_components/
 /**/bower_components/*
-node_modeules
+node_modeules/
+*.log
+
+build/
+dist/

@@ -1,0 +1,16 @@
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <a href="/api/auth/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+	
+        <!-- GOOGLE INFORMATION -->
+        <div ng-controller="app.authCtrl">
+            <div class="well">
+                <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google</h3>
+                    <p>
+                        <strong>email</strong>: {user.email}<br>
+                        <strong>name</strong>: {user.name}
+                    </p>
+            </div>
+        </div>

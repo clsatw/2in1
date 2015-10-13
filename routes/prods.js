@@ -1,6 +1,7 @@
 'use strict';
 var express = require('express');
-
+// var bodyParser = require('body-parser');
+//var parseUrlEncoded = bodyParser.urlencoded({ extended: true });
 var Prods = require('../models/prods.model');
 //console.log(Prods);
 
@@ -45,10 +46,10 @@ router.route('/')
 	});
 
 // on accessing user Route by id
-router.route('/:user_id')
+router.route('/:id')
 	// get the user by id
 	.get(function(req, res) {
-		Prods.findById(req.params.user_id, function(err, data) {
+		Prods.findById(req.params.id, function(err, data) {
 			if (err) {
 				res.send(err);
 				return;
@@ -58,6 +59,7 @@ router.route('/:user_id')
 	})
 	// update the user by id
 	.put(function(req, res) {
+		/*
 		console.log(req.params.user_id);
 		Prods.findById(req.params.user_id, function(err, data) {
 			if (err)
@@ -65,12 +67,7 @@ router.route('/:user_id')
 
 			// set the users properties (comes from the request)
 			var data = new Prods(req.body); // Prods is a schema constructor		
-			//data.name = req.body.name;
-			//data.category = req.body.category;
-			//data.price = req.body.price;
-			//user.description = req.body.description;
-			//user.picture = req.body.picture;           
-
+		
 			// save the data received
 			data.save(function(err) {
 				if (err)
@@ -80,11 +77,17 @@ router.route('/:user_id')
 				res.end();
 			});
 		})
+		*/
+		Prods.findByIdAndUpdate(req.params.id, req.body, function(err, post) {
+			console.log(req.body);
+			if (err) return next(err);
+			res.json(post);
+		});
 	})
 	.delete(function(req, res) {
-		console.log(req.params.user_id);
+		console.log(req.params.id);
 		Prods.remove({
-			_id: req.params.user_id
+			_id: req.params.id
 		}, function(err, data) {
 			if (err)
 				res.send(err);

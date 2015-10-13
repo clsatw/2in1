@@ -1,9 +1,11 @@
 'use strict';
+var userProfile = {};
 var baseUri = '/api/auth/';
 var express = require('express');
 var passport = require('passport');
 // required for passport
-
+//var app = express();
+// return router instance which can be mounted as a middleware.
 var router = express.Router();
 
 // configure app
@@ -59,11 +61,20 @@ router.route('/signup')
 // we will want this protected so you have to be logged in to visit
 // we will use route middleware to verify this (the isLoggedIn function)
 router.route('/profile').get(isLoggedIn, function(req, res) {
-    res.render('profile.ejs', {
-        user: req.user // get the user out of session and pass to template
+    userProfile = req.user;
+    //console.log(req.user.google);
+    //res.sendFile(__dirname + '/profile.html');  // __driname = routers
+    res.redirect('/#/getUserProfile');
+    /*
+    res.render('profile.html', {
+        user: req.user // get the user out of session and pass to template        
     });
+    */
 });
-
+router.route('/getUserProfile').get(function(req, res) {
+    console.log(userProfile);
+    res.json(userProfile);
+});
 
 // route for facebook authentication and login
 router.route('/facebook').get(passport.authenticate('facebook', {
@@ -87,7 +98,7 @@ router.route('/google').get(passport.authenticate('google', {
 // the callback after google has authenticated the user
 router.route('/google/callback').get(
     passport.authenticate('google', {
-        successRedirect: baseUri+'profile',
+        successRedirect: baseUri+'profile',        
         failureRedirect: baseUri
     }));
 

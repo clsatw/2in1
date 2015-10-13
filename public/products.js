@@ -58,7 +58,7 @@
         }
 
         $scope.editProduct = function(product) {
-            $scope.currentProduct = product;
+            angular.copy(product, $scope.currentProduct);
             $location.path('/edit');
         }
 

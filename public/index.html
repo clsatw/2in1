@@ -1,58 +1,22 @@
-<!DOCTYPE html>
-<html ng-app="app">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Markie Store</title>
-        <script src="./bower_components/angular/angular.js"></script>
-        <script src="./bower_components/angular-animate/angular-animate.js"></script>
-        <script src="./bower_components/angular-route/angular-route.js"></script>
-        
-        
-        <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
-        <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
-        <link href="./css/mycss.css" rel='stylesheet'/>
-        
-        <script src='components/restful.js'></script>
-        <script src="controllers/sportsStore.js"></script>
-        <script src="filters/customFilters.js"></script>
-        <script src="controllers/productListControllers.js"></script>
-        <script src="components/increment.js"></script>
-        <script src="components/cart/cart.js"></script>
-        <script src="controllers/checkoutControllers.js"></script>
-        
-    </head>
-    <body ng-controller="sportsStoreCtrl">
-        <header class='container'>
-            <div class="navbar navbar-fixed-top">
-                <a class="navbar-brand" href="#">MARKIE STORE</a> 
-                <a href="#auth" class="btn btn-info btn-lg">
-                    <span class="glyphicon glyphicon-log-in"></span> Log in
-                </a>               
-                <cart-summary />                
-            </div>
-        </header>
-        <section class='container'>
-            <div class="alert alert-danger" ng-show="data.error">
-                Error ({{data.error.status}}). The product data was not loaded.
-                <a href="/index.html" class="alert-link">Click here to try again</a>
-            </div>
-            
-            <div ng-view class="ngFade"></div>
-            
-        </section>
-        <footer class='container'>
-            <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>
-            <address>
-                <strong>Immortal Roach, Inc.</strong><br>
-                1355 Market Street, Suite 900 San Francisco, CA 94103<br>
-            <abbr title="Phone">P:</abbr> (123) 456-7890
-        </address>
-        <address>
-            <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
-        </address>
-    </footer>
-    
+﻿<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head>
+    <title>Products</title>
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-resource/angular-resource.js"></script>
+    <script src="./bower_components/angular-route/angular-route.js"></script>
+
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
+
+    <script src="products.js"></script>
+    <script src="components/increment.js"></script>
+    <script src='components/restful.js'></script>
+</head>
+<body ng-controller="defaultCtrl">
+    <div class="panel panel-primary">
+        <h3 class="panel-heading">Products</h3>
+        <div ng-view></div>
+    </div>
 </body>
 </html>
