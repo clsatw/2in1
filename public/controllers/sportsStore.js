@@ -2,8 +2,8 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
     //.constant('baseUrl', 'http://localhost:3000/')    
     .config(function($routeProvider, $locationProvider) {
         //$locationProvider.html5Mode({
-            //enabled: true,
-            //requireBase: false
+        //enabled: true,
+        //requireBase: false
         //});
         $routeProvider.when("/complete", {
             templateUrl: "../views/thankYou.html"
@@ -13,7 +13,7 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
         });
         $routeProvider.when("/checkout", {
             templateUrl: "../views/checkoutSummary.html"
-        });       
+        });
         $routeProvider.when("/products", {
             templateUrl: "../views/productList.html"
         });
@@ -21,13 +21,13 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
             templateUrl: "../views/auth.html"
         });
         $routeProvider.when('/getUserProfile', {
-             controller: 'app.authCtrl',
-            templateUrl: '../views/userprofile.html'           
+            controller: 'app.authCtrl',
+            templateUrl: '../views/userprofile.html'
         })
         $routeProvider.otherwise({
             templateUrl: "../views/productList.html"
         });
-    }) 
+    })
     .controller("sportsStoreCtrl", function($scope, dataFactory) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  

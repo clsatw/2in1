@@ -1,5 +1,5 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';	// has to be before config coz config reads it
-var config = require('./config/config'),
+var config = require('./server/config/config'),
 	bodyParser = require('body-parser'),   
 	express = require('express'),
 	morgan = require('morgan'),
@@ -11,7 +11,7 @@ var config = require('./config/config'),
 	flash = require('connect-flash');
 
 var app = express();
-require('./config/strategies/passport')(passport); // pass passport for configuration
+require('./server/config/strategies/passport')(passport); // pass passport for configuration
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
@@ -32,10 +32,10 @@ app.use(session({
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-app.use(express.static(__dirname + '/public'));
 
-var prods = require('./routes/prods');
-var auth = require('./routes/auth');
+
+var prods = require('./server/routes/prods');
+var auth = require('./server/routes/auth');
 
 //app.use(session({secret: 'ilovescotchscotchyscotchscotch'})); // session secret
 app.use(passport.initialize());
@@ -45,6 +45,8 @@ app.use(flash());
 //require('../app/routes/users.server.routes.js')(app);
 app.use('/api/auth', auth);
 app.use('/api/prods', prods);
+
+app.use(express.static(__dirname + '/public'));
 
 mongoose.connect(config.db, function(err) {
 	if(err) {
