@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var prodSchema = new mongoose.Schema({
 	name: {
 		type: String,
+		required: true,
 		unique: true,
 		default: ''
 	},	
@@ -11,6 +12,7 @@ var prodSchema = new mongoose.Schema({
 	},
 	category: {
 		type: String,
+		required: true,
 		default: ''
 	},
 	imgUrl: {
