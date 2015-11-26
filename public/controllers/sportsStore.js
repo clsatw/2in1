@@ -34,7 +34,8 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
         $scope.data = {};
         //$scope.user = {};
         $scope.order = {};
-        dataFactory.get().success(function(res) {
-            $scope.data.products = res;
-        });
+        $scope.data.products = dataFactory.query();
+        //dataFactory.query().success(function(res) {
+        //    $scope.data.products = res;
+        //});
     });

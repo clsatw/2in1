@@ -7,14 +7,14 @@ var Prods = require('../models/prods.model');
 
 // returens router instanace which can be mounted as a middleware
 var router = express.Router();
+var bodyParser = require('body-parser'); 
+var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
 
 // configure app
 //var bodyParser = require('body-parser');
 //var parseUrlencoded = bodyParser.urlencoded({
 //	extended: false
 //});
-//app.use(bodyParser.urlencoded({extended:true}));
-//app.use(bodyParser.json());
 
 // the root path relative to the path where it's mounted.
 router.route('/')
@@ -27,10 +27,10 @@ router.route('/')
 		})
 	})
 	// create a prod when the method passed is POST
-	.post(function(req, res) {
+	.post(parseUrlEncoded, function(req, res) {
 		// create a new instance of the user model
-		var data = new Prods(req.body); // Prods is a schema constructor
-		//console.log(data);   
+		// it should be req.body not req.data as there is no data property in req object
+		var data = new Prods(req.body); // Prods is a schema constructor		 
 
 		// save the data received
 		data.save(function(err) {
