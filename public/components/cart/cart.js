@@ -1,38 +1,46 @@
-﻿angular.module("cart", [])
+﻿'use strict';
+angular.module("cart", [])
 .factory("cart", function () {
+    function Cart(cartName) {
+        this.name = cartName;
+        this.clearCart = false;
+        this.checkoutParameters = {};
+        this.cartData = [];
+    }
+    Cart.prototype.addProduct = function (id, name, price) {
+        var addedToExistingItem = false;
+        var i;
+        for (i = 0; i < this.cartData.length; i+=1) {
+            if (this.cartData[i].id == id) {
+                this.cartData[i].count++;
+                addedToExistingItem = true;
+                break;
+            }
+        }
+        if (!addedToExistingItem) {
+            this.cartData.push({
+                count: 1, id: id, price: price, name: name
+            });
+        }
+    };
 
-    var cartData = [];
+    Cart.prototype.removeProduct = function (id) {
+        var i;
+        for (i = 0; i < cartData.length; i++) {
+            if (cartData[i].id == id) {
+                cartData.splice(i, 1);
+                break;
+            }
+        }
+    };
+    Cart.prototype.getProducts = function () {
+            return this.cartData;
+    };
+
+    var myCart = new Cart('myStore');
 
     return {
-
-        addProduct: function (id, name, price) {
-            var addedToExistingItem = false;
-            for (var i = 0; i < cartData.length; i++) {
-                if (cartData[i].id == id) {
-                    cartData[i].count++;
-                    addedToExistingItem = true;
-                    break;
-                }
-            }
-            if (!addedToExistingItem) {
-                cartData.push({
-                    count: 1, id: id, price: price, name: name
-                });
-            }
-        },
-
-        removeProduct: function (id) {
-            for (var i = 0; i < cartData.length; i++) {
-                if (cartData[i].id == id) {
-                    cartData.splice(i, 1);
-                    break;
-                }
-            }
-        },
-
-        getProducts: function () {
-            return cartData;
-        }
+        cart: myCart;
     }
 })
 .directive("cartSummary", function (cart) {
