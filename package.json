@@ -1,12 +1,12 @@
 {
-    "name": "spa",
+    "name": "roach",
     "version": "0.0.1",
-    "description": "sample conference we application",
+    "description": "my store",
     "main": "server.js",
     "scripts": {
         "test": "test"
     },
-    "keywords": ["SPA", "MEAN", "API"],
+    "keywords": ["Sotre", "MEAN"],
     "dependencies": {
         "express": "~4.9",
         "morgan": "~1.0.0",
@@ -28,6 +28,6 @@
         "node": ">=0.8.4",
         "npm": ">=1.2.10"
     },
-    "author": "your name here",
+    "author": "roach huang",
     "license": "MIT"
 }
