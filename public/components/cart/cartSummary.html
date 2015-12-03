@@ -6,10 +6,25 @@
 <div class="navbar-right">
 	<div class="navbar-text">
 		<b>Your cart:</b>
-		{{itemCount()}} item(s),
-		{{total() | currency}}
+		{{cart.itemCount()}} item(s),
+		{{cart.totalPrice() | currency}}
 	</div>
+	<button class="btn btn-danger btn-lg" ng-click="cart.checkOut('PayPal')"
+	ng-disabled="cart.itemCount() < 1">
+	<span class="glyphicon glyphicon-shopping-cart"></span>	Checkout using Paypal</button>
+
+	<button class="btn btn-danger btn-lg" ng-click="cart.checkOut('Google')"
+	ng-disabled="cart.itemCount() < 1">
+	<span class="glyphicon glyphicon-shopping-cart"></span> Checkout using Google</button>
+
+	<button class="btn btn-danger btn-lg" ng-click="cart.checkOut('Strip')"
+	ng-disabled="cart.itemCount() < 1">
+	<span class="glyphicon glyphicon-shopping-cart"></span> Checkout using Strip</button>
+	<!-- Stripe needs a form to post to -->
+	<form class="form-stripe"></form>
+	<!--
 	<a href="#checkout" class="btn btn-danger btn-lg">
 		<span class="glyphicon glyphicon-shopping-cart"></span> Checkout
-	</a>                
-</div>
+	</a>
+	-->                
+</div> 

@@ -1,37 +1,41 @@
 ﻿//----------------------------------------------------------------
 // shopping cart constructor
 //
-function Cart(cartName) {
+ function Cart(cartName) {
     this.cartName = cartName;
     this.clearCart = false;
     this.checkoutParameters = {};
-    this.items = [];
+    this.cartData = [];
 
     // load items from local storage when initializing
-    this.loadItems();
+    this.loadCartData();
 
     // save items to local storage when unloading
     var self = this;
+    
     $(window).unload(function () {
         if (self.clearCart) {
             self.clearItems();
         }
-        self.saveItems();
+        self.saveCartData();
         self.clearCart = false;
     });
 }
 
+Cart.prototype.getProducts = function() {
+    return this.cartData;
+}
+
 // load items from local storage
-Cart.prototype.loadItems = function () {
+Cart.prototype.loadCartData = function () {
     var items = localStorage != null ? localStorage[this.cartName + "_items"] : null;
     if (items != null && JSON != null) {
         try {
             var items = JSON.parse(items);
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
-                if (item.sku != null && item.name != null && item.price != null && item.quantity != null) {
-                    item = new cartItem(item.sku, item.name, item.price, item.quantity);
-                    this.items.push(item);
+                if (item.id != null && item.name != null && item.price != null) {
+                    this.cartData.push({count: 1, id: item.id, price: item.price, name: item.name});
                 }
             }
         }
@@ -40,71 +44,55 @@ Cart.prototype.loadItems = function () {
         }
     }
 }
-
-// save items to local storage
-Cart.prototype.saveItems = function () {
+// save items to local storage (data will still exist if )
+Cart.prototype.saveCartData = function () {
     if (localStorage != null && JSON != null) {
-        localStorage[this.cartName + "_items"] = JSON.stringify(this.items);
+        localStorage[this.cartName + "_items"] = JSON.stringify(this.cartData);
     }
 }
 
 // adds an item to the cart
-Cart.prototype.addItem = function (sku, name, price, quantity) {
-    quantity = this.toNumber(quantity);
-    if (quantity != 0) {
-
-        // update quantity for existing item
-        var found = false;
-        for (var i = 0; i < this.items.length && !found; i++) {
-            var item = this.items[i];
-            if (item.sku == sku) {
-                found = true;
-                item.quantity = this.toNumber(item.quantity + quantity);
-                if (item.quantity <= 0) {
-                    this.items.splice(i, 1);
-                }
+Cart.prototype.addItemToCart = function (id, name, price) {
+        var addedToExistingItem = false;
+        var i;
+        for (i = 0; i < this.cartData.length; i++) {
+            if (this.cartData[i].id == id) {
+                this.cartData[i].count++;
+                addedToExistingItem = true;
+                break;
             }
         }
-
-        // new item, add now
-        if (!found) {
-            var item = new cartItem(sku, name, price, quantity);
-            this.items.push(item);
+        if (!addedToExistingItem) { 
+            // we can also create an CartItem obj and push it to cartData           
+            this.cartData.push({
+                count: 1, id: id, price: price, name: name
+            });
         }
-
-        // save changes
-        this.saveItems();
-    }
+        // save changes to local storage
+        this.saveCartData();
 }
 
 // get the total price for all items currently in the cart
-Cart.prototype.getTotalPrice = function (sku) {
+Cart.prototype.totalPrice = function () {
     var total = 0;
-    for (var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
-        if (sku == null || item.sku == sku) {
-            total += this.toNumber(item.quantity * item.price);
-        }
+    for (var i = 0; i < this.cartData.length; i++) {
+        total += (this.cartData[i].price * this.cartData[i].count);
     }
     return total;
 }
 
-// get the total price for all items currently in the cart
-Cart.prototype.getTotalCount = function (sku) {
-    var count = 0;
-    for (var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
-        if (sku == null || item.sku == sku) {
-            count += this.toNumber(item.quantity);
-        }
+Cart.prototype.itemCount = function () {
+    var total = 0;
+    for (var i = 0; i < this.cartData.length; i++) {
+        total += this.cartData[i].count;
     }
-    return count;
+    return total;
 }
 
 // clear the cart
-Cart.prototype.clearItems = function () {
-    this.items = [];
-    this.saveItems();
+Cart.prototype.clearCart = function () {
+    this.cartData = [];
+    this.saveCartData();    // save to local storage
 }
 
 // define checkout parameters
@@ -123,7 +111,7 @@ Cart.prototype.addCheckoutParameters = function (serviceName, merchantID, option
 }
 
 // check out
-Cart.prototype.checkout = function (serviceName, clearCart) {
+Cart.prototype.checkOut = function (serviceName, clearCart) {
 
     // select serviceName if we have to
     if (serviceName == null) {
@@ -168,13 +156,14 @@ Cart.prototype.checkoutPayPal = function (parms, clearCart) {
     };
 
     // item data
-    for (var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
+    for (var i = 0; i < this.cartData.length; i++) {
+        var item = this.cartData[i];
         var ctr = i + 1;
-        data["item_number_" + ctr] = item.sku;
+        data["item_number_" + ctr] = item.id;
         data["item_name_" + ctr] = item.name;
         data["quantity_" + ctr] = item.quantity;
-        data["amount_" + ctr] = item.price.toFixed(2);
+        //data["amount_" + ctr] = item.price.toFixed(2);
+        data["amount_" + ctr] = item.price;
     }
 
     // build form
@@ -202,12 +191,13 @@ Cart.prototype.checkoutGoogle = function (parms, clearCart) {
     var data = {};
 
     // item data
-    for (var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
+    for (var i = 0; i < this.cartData.length; i++) {
+        var item = this.cartData[i];
         var ctr = i + 1;
-        data["item_name_" + ctr] = item.sku;
+        data["item_name_" + ctr] = item.id;
         data["item_description_" + ctr] = item.name;
-        data["item_price_" + ctr] = item.price.toFixed(2);
+        //data["item_price_" + ctr] = item.price.toFixed(2);
+        data["item_price_" + ctr] = item.price;
         data["item_quantity_" + ctr] = item.quantity;
         data["item_merchant_id_" + ctr] = parms.merchantID;
     }
@@ -229,11 +219,77 @@ Cart.prototype.checkoutGoogle = function (parms, clearCart) {
     form.submit();
     form.remove();
 }
+Cart.prototype.checkoutStripe = function (parms, clearCart) {
+    // global data
+    var data = {};
 
+    // item data
+    for (var i = 0; i < this.items.length; i++) {
+    var item = this.items[i];
+    var ctr = i + 1;
+    data["item_name_" + ctr] = item.sku;
+    data["item_description_" + ctr] = item.name;
+    data["item_price_" + ctr] = item.price.toFixed(2);
+    data["item_quantity_" + ctr] = item.quantity;
+    }
+
+    // build form
+    var form = $('.form-stripe');
+    form.empty();
+    // NOTE: in production projects, you have to handle the post
+    // with a few simple calls to the Stripe API.
+    // See https://stripe.com/docs/checkout
+    // You'll get a POST to the address below w/ a stripeToken.
+    // First, you have to initialize the Stripe API w/ your public/private keys.
+    // You then call Customer.create() w/ the stripeToken and your email address.
+    // Then you call Charge.create() w/ the customer ID from the
+    // previous call and your charge amount.
+    form.attr("action", parms.options['chargeurl']);
+    form.attr("method", "POST");
+    form.attr("style", "display:none;");
+    this.addFormFields(form, data);
+    this.addFormFields(form, parms.options);
+    $("body").append(form);
+
+    // ajaxify form
+    form.ajaxForm({
+    success: function () {
+    $.unblockUI();
+    alert('Thanks for your order!');
+    },
+    error: function (result) {
+    $.unblockUI();
+    alert('Error submitting order: ' + result.statusText);
+    }
+    });
+
+    var token = function (res) {
+    var $input = $('<input type=hidden name=stripeToken />').val(res.id);
+
+    // show processing message and block UI until form is submitted and returns
+    $.blockUI({ message: 'Processing order...' });
+
+    // submit form
+    form.append($input).submit();
+    this.clearCart = clearCart == null || clearCart;
+    form.submit();
+    };
+
+    StripeCheckout.open({
+    key: parms.merchantID,
+    address: false,
+    amount: this.getTotalPrice() *100, /** expects an integer **/
+    currency: 'usd',
+    name: 'Purchase',
+    description: 'Description',
+    panelLabel: 'Checkout',
+    token: token
+    });
+}
 // utility methods
 Cart.prototype.addFormFields = function (form, data) {
     if (data != null) {
-        $.each(data, function (name, value) {
+         angular.forEach(data, function (name, value) {
             if (value != null) {
                 var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
                 form.append(input);
@@ -254,14 +310,3 @@ function checkoutParameters(serviceName, merchantID, options) {
     this.merchantID = merchantID;
     this.options = options;
 }
-
-//----------------------------------------------------------------
-// items in the cart
-//
-function cartItem(sku, name, price, quantity) {
-    this.sku = sku;
-    this.name = name;
-    this.price = price * 1;
-    this.quantity = quantity * 1;
-}
-

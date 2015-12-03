@@ -22,7 +22,7 @@
     .controller("defaultCtrl", function($scope, $location, dataFactory) {
 
         $scope.displayMode = "list";
-        $scope.currentProduct = null;
+        $scope.currentProduct = null;     
 
         $scope.listProducts = function() {
             dataFactory.get().success(function(res) {

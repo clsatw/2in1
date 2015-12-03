@@ -1,4 +1,4 @@
-angular.module('app', ['app.restful', "customFilters", "cart", "ui.router", "ngAnimate"])
+angular.module('app', ['app.restful', "customFilters", "cartService", "ui.router", "ngAnimate"])
     .constant('baseUrl', 'http://localhost:3000/')    
     .config(function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode({

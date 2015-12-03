@@ -1,4 +1,4 @@
-angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAnimate"])
+angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "app.cart"])
     //.constant('baseUrl', 'http://localhost:3000/')    
     .config(function($routeProvider, $locationProvider) {
         //$locationProvider.html5Mode({
@@ -35,7 +35,4 @@ angular.module('app', ['app.restful', "customFilters", "cart", "ngRoute", "ngAni
         //$scope.user = {};
         $scope.order = {};
         $scope.data.products = dataFactory.query();
-        //dataFactory.query().success(function(res) {
-        //    $scope.data.products = res;
-        //});
     });
