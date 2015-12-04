@@ -11,11 +11,11 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         $routeProvider.when("/placeorder", {
             templateUrl: "../views/placeOrder.html"
         });
-        $routeProvider.when("/checkout", {
-            templateUrl: "../views/checkoutSummary.html"
+        $routeProvider.when("/cart", {
+            templateUrl: "../components/cart/cart.html"
         });
         $routeProvider.when("/products", {
-            templateUrl: "../views/productList.html"
+            templateUrl: "../views/store.html"
         });
         $routeProvider.when("/auth", {
             templateUrl: "../views/auth.html"
@@ -25,10 +25,10 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             templateUrl: '../views/userprofile.html'
         })
         $routeProvider.otherwise({
-            templateUrl: "../views/productList.html"
+            templateUrl: "../views/store.html"
         });
     })
-    .controller("sportsStoreCtrl", function($scope, dataFactory) {
+    .controller("StoreCtrl", function($scope, dataFactory) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
         $scope.data = {};

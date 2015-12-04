@@ -29,13 +29,18 @@ angular.module("app.cart", [])
         cart: myCart
     };
 })
-.directive("cartSummary", function (cartService) {
+.directive("cart", function (cartService) {
     return {
-        restrict: "E",
-        templateUrl: "components/cart/cartSummary.html",
-        controller: function ($scope) {
+        restrict: "A",
+        controller: function($scope) {
             $scope.cart = cartService.cart;            
+        },
+        templateUrl: function(elem, attrs) {
+            return attrs['cart'] == 'Summary' ?
+                "components/cart/cartSummary.html" : "components/cart/cartDetails.html";
         }
-    };
+    }
 });
+
+
 

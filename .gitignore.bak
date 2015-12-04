@@ -1,7 +1,0 @@
-bower_components/
-/**/bower_components/*
-node_modeules/
-*.log
-
-build/
-dist/

@@ -16,7 +16,7 @@
         <link href="./css/mycss.css" rel='stylesheet'/>
         
         <script src='components/restful.js'></script>
-        <script src="controllers/sportsStore.js"></script>
+        <script src="controllers/Store.js"></script>
         <script src="filters/customFilters.js"></script>
         <script src="controllers/productListControllers.js"></script>
         <script src="components/increment.js"></script>
@@ -25,14 +25,14 @@
         <script src="controllers/auth.ctrl.js"></script>
 
     </head>
-    <body ng-controller="sportsStoreCtrl">
+    <body ng-controller="StoreCtrl">
         <header class='container'>
             <div class="navbar navbar-fixed-top">
                 <a class="navbar-brand" ng-href="#">MARKIE STORE</a> 
                 <a href="#auth" class="btn btn-info btn-lg">
                     <span class="glyphicon glyphicon-log-in"></span> Log in
                 </a>               
-                <cart-summary />                
+                <span cart='Summary'></span>                
             </div>
         </header>
         <section class='container'>

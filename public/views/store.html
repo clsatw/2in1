@@ -17,13 +17,15 @@ Please select the products you want ….<br /></p>
         <table class='table table-responsive table-bordered'>
             <tr class="ngFade" ng-repeat="item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize">
                 <td class='tdCenter'>
-                    <a href='#' class='thumbnail'>
+                    <a class='thumbnail' href="#/products/{{item._id}}">                    
                         <img ng-src="{{item.imgUrl}}" class='img-responsive' width = '180'height="auto">
                     </a>
                     <!-- <pre>{{item.imgUrl}}</pre> -->
                 </td>
                 
-                <td><strong>{{item.name}}</strong>
+                <td>
+                    <a href="#/products/{{item._id}}">
+                    <strong>{{item.name}}</strong></a>
                     <br/>{{item.description}}
                 </td>
                 <td class='tdRight'>

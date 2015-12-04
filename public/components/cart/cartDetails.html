@@ -1,30 +1,33 @@
 ﻿<h2>Your cart</h2>
+<p class='text-info'>
+    Here you can edit the items,
+    go back to the store, clear the cart or checkout.</p>
 
-<div ng-controller="cartSummaryController">
+<div>
 
-    <div class="alert alert-warning" ng-show="cartData.length == 0">
+    <div class="alert alert-warning" ng-show="cart.itemCount() < 1">
         There are no products in your shopping cart.
         <a href="#/products" class="alert-link">Click here to return to the catalogue</a>
     </div>
 
-    <div ng-hide="cartData.length == 0">
-        <table class="table">
+    <div ng-hide="cart.itemCount() < 1" class='span8'>
+        <table class="table table-bordered">
             <thead>
-                <tr>
+                <tr class='well'>
                     <th>Quantity</th>
-                    <th>Item</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Subtotal</th>
+                    <th><b>Item</b></th>
+                    <th class="tdRight">Price</th>
+                    <th class="tdRight">Subtotal</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in cartData">
-                    <td class="text-center">{{item.count}}</td>
-                    <td class="text-left">{{item.name}}</td>
-                    <td class="text-right">{{item.price | currency}}</td>
-                    <td class="text-right">{{ (item.price * item.count) | currency}}</td>
+                <tr ng-repeat="item in cart.cartData" | orderBy: 'name'>
+                    <td class="tdCenter">{{item.count}}</td>
+                    <td class="tdLeft">{{item.name}}</td>
+                    <td class="tdRight">{{item.price | currency}}</td>
+                    <td class="tdRight">{{ (item.price * item.count) | currency}}</td>
                     <td>
-                        <button ng-click="remove(item.id)"
+                        <button ng-click="cart.remove(item.id)"
                                 class="btn btn-sm btn-warning">
                             Remove
                         </button>
@@ -32,7 +35,7 @@
                 </tr>
             </tbody>
             <tfoot>
-                <tr>
+                <tr class='well'>
                     <td colspan="3" class="text-right">Total:</td>
                     <td class="text-right">
                         {{total() | currency}}

@@ -1,6 +1,6 @@
 ﻿<div class='well'>
     <p class='text-info'>
-        Welcome to the Markie Store<br />
+        Welcome to the xxxx Markie Store<br />
         Please select the products you want...<br/>
     </p>
     <p>Search: <input ng-model='search'></p>
