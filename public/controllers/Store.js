@@ -14,8 +14,12 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         $routeProvider.when("/cart", {
             templateUrl: "../components/cart/cart.html"
         });
-        $routeProvider.when("/products", {
+        $routeProvider.when("/store", {
             templateUrl: "../views/store.html"
+        });
+        // $routeParams.productId (see the controller below)
+        $routeProvider.when("/products/:productId", {
+            templateUrl: "../views/product.html"
         });
         $routeProvider.when("/auth", {
             templateUrl: "../views/auth.html"
@@ -35,4 +39,9 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         //$scope.user = {};
         $scope.order = {};
         $scope.data.products = dataFactory.query();
+
+        // use routing to pick the selected product
+        if ($routeParams.productId != null) {
+            $scope.data.product = dataFactory.query($routeParams.ProductId);
+    }
     });
