@@ -102,3 +102,8 @@ aside {
 .table-nonfluid {
    width: auto;
 }
+
+/* space btwn buttons */
+.btn-wrapper .btn {
+    margin-bottom:5px;
+}

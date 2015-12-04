@@ -32,6 +32,6 @@
         }
 
         $scope.add2Cart = function (product) {
-            cartService.cart.addItemToCart(product.id, product.name, product.price);
+            cartService.cart.addItemToCart(product._id, product.name, product.price);
         }
     });
