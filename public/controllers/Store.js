@@ -1,3 +1,4 @@
+'use strict';
 angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "app.cart"])
     //.constant('baseUrl', 'http://localhost:3000/')    
     .config(function($routeProvider, $locationProvider) {
@@ -27,7 +28,7 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         $routeProvider.when('/getUserProfile', {
             controller: 'app.authCtrl',
             templateUrl: '../views/userprofile.html'
-        })
+        });
         $routeProvider.otherwise({
             templateUrl: "../views/store.html"
         });
@@ -40,8 +41,16 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         $scope.order = {};
         $scope.data.products = dataFactory.query();
 
+        $scope.getProduct = function (sku) {
+            for (var i = 0; i < this.products.length; i++) {
+                if (this.products[i].sku == sku)
+                    return this.products[i];
+            }
+            return null;
+        }
+
         // use routing to pick the selected product
         if ($routeParams.productId != null) {
             $scope.data.product = dataFactory.query($routeParams.ProductId);
-    }
+        }
     });

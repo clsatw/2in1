@@ -38,7 +38,7 @@
                     <td class="tdRight">{{item.price | currency}}</td>
                     <td class="tdRight">{{ (item.price * item.count) | currency}}</td>
                     <td class='tdCenter' title='remove from cart'>
-                        <button ng-click="cart.remove(item._id)"
+                        <button ng-click="cart.remove(item.id)"
                                 class="btn btn-sm btn-warning">
                             Remove
                         </button>
