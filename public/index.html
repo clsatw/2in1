@@ -9,14 +9,13 @@
         <script src="./bower_components/angular-animate/angular-animate.js"></script>
         <script src="./bower_components/angular-route/angular-route.js"></script>
         <script src="./bower_components/angular-resource/angular-resource.js"></script>
+        <script src="./bower_components/angular-payments/lib/angular-payments.min.js"></script>
         <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+        
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
- 
         <script type="text/javascript">
-          Stripe.setPublishableKey('pk_test_p0QQDCeJQA7W9X9y0VP7QOz5');
+        Stripe.setPublishableKey('pk_test_p0QQDCeJQA7W9X9y0VP7QOz5');
         </script>
-        <script src="bower_components/angular-payments/lib/angular-payments.js"></script>
-
         <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
         <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
         <link href="./css/mycss.css" rel='stylesheet'/>
@@ -27,19 +26,17 @@
         <script src="controllers/productListControllers.js"></script>
         <script src="components/increment.js"></script>
         <script src="components/cart/cartClass.js"></script>
-        <script src="components/cart/cart.js"></script>      
+        <script src="components/cart/cart.js"></script>
         <script src="controllers/auth.ctrl.js"></script>
-
-
     </head>
     <body ng-controller="StoreCtrl">
         <header class='container'>
             <div class="navbar navbar-default navbar-fixed-top">
-                <a class="navbar-brand" ng-href="#">MARKIE STORE</a> 
+                <a class="navbar-brand" ng-href="#">MARKIE STORE</a>
                 <a href="#auth" class="btn btn-info btn-lg">
                     <span class="glyphicon glyphicon-log-in"></span> Log in
-                </a>               
-                <span cart='Summary'></span>                
+                </a>
+                <span cart='Summary'></span>
             </div>
         </header>
         <section class='container'>
@@ -51,16 +48,15 @@
             <div ng-view class="ngFade"></div>
             
         </section>
-
         <footer class='container'>
             <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>
             <address>
-                <strong>Immortal Roach, Inc.</strong><br>                
-                <abbr title="Phone">P:</abbr> (123) 456-7890
-            </address>
-            <address>
-                <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
-             </address>
-        </footer>    
-    </body>
+                <strong>Immortal Roach, Inc.</strong><br>
+            <abbr title="Phone">P:</abbr> (123) 456-7890
+        </address>
+        <address>
+            <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
+        </address>
+    </footer>
+</body>
 </html>

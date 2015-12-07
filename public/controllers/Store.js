@@ -33,7 +33,7 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             templateUrl: "../views/store.html"
         });
     })
-    .controller("StoreCtrl", function($scope, dataFactory) {
+    .controller("StoreCtrl", function($scope, dataFactory, $routeParams) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
         $scope.data = {};
@@ -51,6 +51,6 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
 
         // use routing to pick the selected product
         if ($routeParams.productId != null) {
-            $scope.data.product = dataFactory.query($routeParams.ProductId);
+            $scope.data.product = dataFactory.get($routeParams.ProductId);
         }
     });

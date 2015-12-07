@@ -1,0 +1,48 @@
+﻿<p class="text-info">
+    <img ng-src="{{product.imgUrl}}.jpg" alt="{{product.name}}"/>
+    {{product.name}}: {{product.description}}<br />
+</p>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class='col-md-8'>
+
+            <!-- product info -->
+            <table class="table table-bordered">
+
+                <tr class="well">
+                    <td class="tdRight" colspan="3" >
+                        <a href="default.htm#/cart" title="go to shopping cart" ng-disabled="cart.totalCount() < 1">
+                            <i class="icon-shopping-cart" />
+                            <b>{{cart.itemCount()}}</b> items, <b>{{cart.totalPrice() | currency}}</b>
+                            <span ng-show="cart.itemCount(product._id) > 0"><br />this item is in the cart</span>
+                        </a>
+                    </td>
+                </tr> 
+            </table>
+        </div>
+
+        <!-- buttons -->
+        <aside class='col-md-4'>
+            <div class='btn-wrapper'>
+            <button 
+                class="btn btn-block btn-success" 
+                ng-click="cart.addItem(product._id, product.name, product.price, 1)">
+                <i class="icon-shopping-cart icon-white" /> Add to cart
+            </button>
+            <button 
+                class="btn btn-block btn-danger" 
+                ng-click="cart.addItem(product._id, product.name, product.price, -10000)"
+                ng-disabled="cart.getTotalCount(product._id) < 1">
+                <i class="icon-trash icon-white" /> Remove from cart
+            </button>
+            <button 
+                class="btn btn-block" 
+                onclick="window.location.href=''">
+                <i class="icon-chevron-left" /> Back to store
+            </button>
+            </div>
+        </aside>
+    </div>
+</div>
+
