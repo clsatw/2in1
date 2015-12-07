@@ -9,7 +9,7 @@ The $save method is the simplest to work with. Here is how I used it in the upda
 */
 'use strict';
 angular.module("app.restful", ['ngResource'])
-    .constant("dataUrl", "http://localhost:3000/api/prods/")
+    .constant("dataUrl", "http://localhost:5000/api/prods/")
     .factory("dataFactory", dataFactory);
 
 dataFactory.$inject = ['dataUrl', '$resource'];

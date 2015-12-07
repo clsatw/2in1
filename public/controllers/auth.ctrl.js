@@ -1,6 +1,6 @@
 'use strict';
 angular.module("app")
-.constant('authUrl', 'http://localhost:3000/api/auth/')
+.constant('authUrl', 'http://localhost:5000/api/auth/')
 .controller("app.authCtrl", function ($scope, $http) {
     $scope.user = {};
     $http.get('http://localhost:3000/api/auth/getUserProfile').success(function(res) {
