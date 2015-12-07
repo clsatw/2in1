@@ -17,7 +17,7 @@ Please select the products you want ….<br /></p>
         <table class='table table-responsive table-bordered'>
             <tr class="ngFade" ng-repeat="item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize">
                 <td class='tdCenter'>
-                    <a class='thumbnail' href="#/products/{{item._id}}">                    
+                    <a class='thumbnail' href="#/products/{{item._id}}">
                         <img ng-src="{{item.imgUrl}}" class='img-responsive' width = '180'height="auto">
                     </a>
                     <!-- <pre>{{item.imgUrl}}</pre> -->
@@ -41,15 +41,15 @@ Please select the products you want ….<br /></p>
                             <input name='qty' type='number' ng-model='qty' min='1' max='9' value=1  size='1'/>
                             -->
                             <button class='btn-primary' ng-click='add2Cart(item)'>Add to Cart</button>
-                </td>
-            </tr>
-        </table>
-        <footer class="pull-right btn-group">
-            <a ng-repeat="page in data.products | filter:categoryFilterFn | pageCount:pageSize"
-                ng-click="selectPage($index + 1)" class="btn btn-default"
-                ng-class="getPageClass($index + 1)">
-                {{$index + 1}}
-            </a>
-        </footer>
-    </div>
-    </main>
+                        </td>
+                    </tr>
+                </table>
+                <footer class="pull-right btn-group">
+                    <a ng-repeat="page in data.products | filter:categoryFilterFn | pageCount:pageSize"
+                        ng-click="selectPage($index + 1)" class="btn btn-default"
+                        ng-class="getPageClass($index + 1)">
+                        {{$index + 1}}
+                    </a>
+                </footer>
+            </div>
+            </main>
