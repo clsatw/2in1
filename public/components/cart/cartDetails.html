@@ -1,109 +1,97 @@
 ﻿<h2>Your cart</h2>
 <p class='text-info'>
     Here you can edit the items,
-    go back to the store, clear the cart or checkout.</p>
-
-    <div class="alert alert-warning" ng-show="cart.itemCount() < 1">
-        Your cart is empty.
-        <a href="#/products" class="alert-link">Back to Store</a>
-    </div>
-
-class='col-md-8'
-        <table class="table table-bordered">
-            <thead>
-                <tr class='well'>                   
-                    <th><b>Item</b></th>
-                     <th>Quantity</th>
-                    <th class="tdRight">Price</th>
-                    <th class="tdRight">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in cart.cartData">
-                    <td class="tdLeft">{{item.name}}</td>
-                    <td class="tdRight">
-                        <div class='btn-group btn-group-sm'> 
+go back to the store, clear the cart or checkout.</p>
+<div class="alert alert-warning" ng-show="cart.itemCount() < 1">
+    Your cart is empty.
+    <a href="#/products" class="alert-link">Back to Store</a>
+</div>
+<div class='col-md-8'>
+    <table class="table table-bordered">
+        <thead>
+            <tr class='well'>
+                <th><b>Item</b></th>
+                <th>Quantity</th>
+                <th class="tdRight">Price</th>
+                <th class="tdRight">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in cart.cartData">
+                <td class="tdLeft">{{item.name}}</td>
+                <td class="tdRight">
+                    <div class='btn-group btn-group-sm'>
                         <!-- use type=tel instead of  to prevent spinners -->
-                        <input type='tel' ng-model='item.count' 
-                            ng-change="cart.saveItems()" />
+                        <input type='tel' ng-model='item.count'
+                        ng-change="cart.saveItems()" />
                         
-                            <label class="btn btn-success active"                          ng-disabled='item.count >= 1000'
-                            ng-click="cart.addItem(item.id, item.name, item.price, +1)">+</label>
-                            <label class="btn btn-warning" 
+                        <label class="btn btn-success active"                          ng-disabled='item.count >= 1000'
+                        ng-click="cart.addItem(item.id, item.name, item.price, +1)">+</label>
+                        <label class="btn btn-warning"
                             ng-disabled="item.count <= 1"
-                            ng-click="cart.addItem(item.id, item.name, item.price, -1)">-</label>
-                        </div>    
-                                         
-                    </td>
-                    <td class="tdRight">{{item.price | currency}}</td>
-                    <td class="tdRight">{{ (item.price * item.count) | currency}}</td>
-                    <td class='tdCenter' title='remove from cart'>
-                        <button ng-click="cart.remove(item.id)"
-                                class="btn btn-sm btn-warning">
-                            Remove
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+                        ng-click="cart.addItem(item.id, item.name, item.price, -1)">-</label>
+                    </div>
+                    
+                </td>
+                <td class="tdRight">{{item.price | currency}}</td>
+                <td class="tdRight">{{ (item.price * item.count) | currency}}</td>
+                <td class='tdCenter' title='remove from cart'>
+                    <button ng-click="cart.remove(item.id)"
+                    class="btn btn-sm btn-warning">
+                    Remove
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+        <tr class='well'>
+            <td><b>Total</b></td>
+            <td class="tdRight"><b>{{cart.totalPrice() | currency}}</b></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<!-- buttons -->
+<aside class="col-md-4">
+    <div class=btn-wrapper>
+        <a class="btn btn-primary" href="#/products"><i class="icon-chevron-left" /> Back to Store</a>
+        <button class="btn btn-block btn-danger"
+            ng-click="cart.emptyCart()"        
+            <i class="icon-trash icon-white" /> Clear cart
+        </button>
+    </div>
+    <br />
+    <section class='btn-wrapper'>
+        <button
+        class="btn btn-block btn-primary"
+        ng-click="cart.checkout('PayPal')"
+        ng-disabled="cart.itemCount() < 1">
+        <i class="icon-ok icon-white" /> Checkout with PayPal
+        </button>
+        <button
+        class="btn btn-block btn-primary"
+        ng-click="cart.checkout('Google')"
+        ng-disabled="cart.itemCount() < 1">
+        <i class="icon-ok icon-white" /> Checkout with Google
+        </button>
+    </section>
+    <br />
+    <p class="text-info">
+        <button
+        class="btn btn-block btn-link"
+        ng-click="cart.checkout('PayPal')"
+        ng-disabled="cart.itemCount() < 1" >
+        <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
+        </button>
+        <button
+        class="btn btn-block btn-link"
+        ng-click="cart.checkout('Google')"
+        ng-disabled="cart.itemCount() < 1" >
+        <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
+        </button>
+    </p>
+</aside>
 
-            <tfoot>
-                <tr class='well'>
-                    <td><b>Total</b></td>
-                    <td class="tdRight"><b>{{cart.totalPrice() | currency}}</b></td>
-                </tr>
-            </tfoot>
-        </table>
-        </div>
-
-        <!-- buttons -->
-        <aside class="col-md-4">
-            <div class=btn-wrapper>
-                <a class="btn btn-primary" href="#/products"><i class="icon-chevron-left" /> Back to Store</a>                
-                <button 
-                    class="btn btn-block btn-danger" 
-                    ng-click="cart.clearCart()" 
-                    ng-disabled="cart.itemCount() < 1" >
-                    <i class="icon-trash icon-white" /> clear cart
-                </button>
-            </div>
-
-            <br />
-
-            <section class='btn-wrapper'>
-                <button
-                    class="btn btn-block btn-primary"
-                    ng-click="cart.checkout('PayPal')"
-                    ng-disabled="cart.itemCount() < 1">
-                    <i class="icon-ok icon-white" /> Checkout with PayPal
-                </button>
-                <button 
-                    class="btn btn-block btn-primary" 
-                    ng-click="cart.checkout('Google')" 
-                    ng-disabled="cart.itemCount() < 1">
-                    <i class="icon-ok icon-white" /> Checkout with Google
-                </button>
-            </section>
-
-            <br />
-
-            <p class="text-info">
-                <button 
-                    class="btn btn-block btn-link"
-                    ng-click="cart.checkout('PayPal')"
-                    ng-disabled="cart.itemCount() < 1" >
-                    <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
-                </button>    
-                <button 
-                    class="btn btn-block btn-link" 
-                    ng-click="cart.checkout('Google')" 
-                    ng-disabled="cart.itemCount() < 1" >
-                    <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
-                </button>    
-            </p>
-        </aside>           
-        
-        <!--
-            <a class="btn btn-primary" href="#/placeorder">Place order now</a>
-        -->
-   
-
+<!--
+<a class="btn btn-primary" href="#/placeorder">Place order now</a>
+-->

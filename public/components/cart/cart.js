@@ -36,8 +36,12 @@ angular.module("app.cart", [])
             $scope.cart = cartService.cart;            
         },
         templateUrl: function(elem, attrs) {
-            return attrs['cart'] == 'Summary' ?
-                "components/cart/cartSummary.html" : "components/cart/cartDetails.html";
+            if (attrs['cart'] == 'Summary')
+                return "components/cart/cartSummary.html";
+            else if (attrs['cart'] == 'Details') 
+                return "components/cart/cartDetails.html";
+            else 
+                return "components/cart/clearCart.html";
         }
     }
 });

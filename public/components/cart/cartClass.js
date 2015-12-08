@@ -45,14 +45,14 @@ Cart.prototype.loadCartData = function () {
     }
 }
 // save items to local storage (data will still exist if )
-Cart.prototype.saveCartData = function () {
+Cart.prototype.saveCartData = function() {
     if (localStorage != null && JSON != null) {
         localStorage[this.cartName + "_items"] = JSON.stringify(this.cartData);
     }
 }
 
 // adds an item to the cart
-Cart.prototype.addItemToCart = function (id, name, price) {
+Cart.prototype.addItemToCart = function(id, name, price) {
         var addedToExistingItem = false;
         var i;
         for (i = 0; i < this.cartData.length; i++) {
@@ -73,7 +73,7 @@ Cart.prototype.addItemToCart = function (id, name, price) {
 }
 
 // get the total price for all items currently in the cart
-Cart.prototype.totalPrice = function () {
+Cart.prototype.totalPrice = function() {
     var total = 0;
     for (var i = 0; i < this.cartData.length; i++) {
         total += (this.cartData[i].price * this.cartData[i].count);
@@ -81,7 +81,7 @@ Cart.prototype.totalPrice = function () {
     return total;
 }
 
-Cart.prototype.itemCount = function () {
+Cart.prototype.itemCount = function() {
     var total = 0;
     for (var i = 0; i < this.cartData.length; i++) {
         total += this.cartData[i].count;
@@ -90,13 +90,13 @@ Cart.prototype.itemCount = function () {
 }
 
 // clear the cart
-Cart.prototype.clearCart = function () {
+Cart.prototype.emptyCart = function() {
     this.cartData = [];
     this.saveCartData();    // save to local storage
 }
 
 // define checkout parameters
-Cart.prototype.addCheckoutParameters = function (serviceName, merchantID, options) {
+Cart.prototype.addCheckoutParameters = function(serviceName, merchantID, options) {
 
     // check parameters
     if (serviceName != "PayPal" && serviceName != "Google") {
@@ -111,7 +111,7 @@ Cart.prototype.addCheckoutParameters = function (serviceName, merchantID, option
 }
 
 // check out
-Cart.prototype.checkOut = function (serviceName, clearCart) {
+Cart.prototype.checkOut = function(serviceName, clearCart) {
 
     // select serviceName if we have to
     if (serviceName == null) {
@@ -144,7 +144,7 @@ Cart.prototype.checkOut = function (serviceName, clearCart) {
 // check out using PayPal
 // for details see:
 // www.paypal.com/cgi-bin/webscr?cmd=p/pdn/howto_checkout-outside
-Cart.prototype.checkoutPayPal = function (parms, clearCart) {
+Cart.prototype.checkoutPayPal = function(parms, clearCart) {
 
     // global data
     var data = {
@@ -185,7 +185,7 @@ Cart.prototype.checkoutPayPal = function (parms, clearCart) {
 // for details see:
 // developers.google.com/checkout/developer/Google_Checkout_Custom_Cart_How_To_HTML
 // developers.google.com/checkout/developer/interactive_demo
-Cart.prototype.checkoutGoogle = function (parms, clearCart) {
+Cart.prototype.checkoutGoogle = function(parms, clearCart) {
 
     // global data
     var data = {};
@@ -219,7 +219,7 @@ Cart.prototype.checkoutGoogle = function (parms, clearCart) {
     form.submit();
     form.remove();
 }
-Cart.prototype.checkoutStripe = function (parms, clearCart) {
+Cart.prototype.checkoutStripe = function(parms, clearCart) {
     // global data
     var data = {};
 
@@ -253,7 +253,7 @@ Cart.prototype.checkoutStripe = function (parms, clearCart) {
 
     // ajaxify form
     form.ajaxForm({
-    success: function () {
+    success: function() {
     $.unblockUI();
     alert('Thanks for your order!');
     },
@@ -287,9 +287,9 @@ Cart.prototype.checkoutStripe = function (parms, clearCart) {
     });
 }
 // utility methods
-Cart.prototype.addFormFields = function (form, data) {
+Cart.prototype.addFormFields = function(form, data) {
     if (data != null) {
-         angular.forEach(data, function (name, value) {
+         angular.forEach(data, function(name, value) {
             if (value != null) {
                 var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
                 form.append(input);
@@ -297,7 +297,7 @@ Cart.prototype.addFormFields = function (form, data) {
         });
     }
 }
-Cart.prototype.toNumber = function (value) {
+Cart.prototype.toNumber = function(value) {
     value = value * 1;
     return isNaN(value) ? 0 : value;
 }
