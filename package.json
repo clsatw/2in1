@@ -4,7 +4,8 @@
     "description": "my store",
     "main": "server.js",
     "scripts": {
-        "test": "test"
+        "start": "node server.js",
+        "test": "mocha"
     },
     "keywords": ["Sotre", "MEAN"],
     "dependencies": {        
@@ -25,8 +26,8 @@
         "bcrypt-nodejs": "latest"
     },
     "engines": {
-        "node": ">=0.8.4",
-        "npm": ">=1.2.10"
+        "node": "4.0.0",
+        "npm": "2.14.2"
     },
     "author": "roach huang",
     "license": "MIT"
