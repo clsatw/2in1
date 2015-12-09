@@ -17,13 +17,12 @@ require('./server/config/strategies/passport')(passport); // pass passport for c
 var options = {};
 options.port = process.env.port || 5000;
 
-/*
+
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 } else if (process.env.NODE_ENV === 'production') {
 	app.use(compress());
 }
-*/
 
 //var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
 //app.use(bodyParser.urlencoded({extended: false}));
