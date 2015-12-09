@@ -15,8 +15,7 @@ require('./server/config/strategies/passport')(passport); // pass passport for c
 
 // Parsing environment variables
 var options = {};
-options.port = process.env.port || 5000;
-
+options.port = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
