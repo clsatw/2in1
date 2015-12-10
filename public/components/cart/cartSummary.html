@@ -5,8 +5,8 @@
 <div class="navbar-right">
 	<div class="navbar-text">
 		<b>Your cart:</b>
-		{{cart.itemCount()}} item(s),
-		{{cart.totalPrice() | currency}}
+		{{cart.getItemCount()}} item(s),
+		{{cart.getTotalPrice() | currency}}
 	</div>
 	
 	<a href="#cart" class="btn btn-danger btn-lg">

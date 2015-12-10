@@ -72,8 +72,19 @@ Cart.prototype.addItemToCart = function(id, name, price) {
         this.saveCartData();
 }
 
+Cart.prototype.removeItem = function(id) {
+    for (var i = 0; i < this.cartData.length; i++) {
+        if (this.cartData[i].id == id) {
+            this.cartData.splice(i, 1);
+            break;
+        }
+    }
+    // save changes to local storage
+    this.saveCartData();
+}
+
 // get the total price for all items currently in the cart
-Cart.prototype.totalPrice = function() {
+Cart.prototype.getTotalPrice = function() {
     var total = 0;
     for (var i = 0; i < this.cartData.length; i++) {
         total += (this.cartData[i].price * this.cartData[i].count);
@@ -81,7 +92,7 @@ Cart.prototype.totalPrice = function() {
     return total;
 }
 
-Cart.prototype.itemCount = function() {
+Cart.prototype.getItemCount = function() {
     var total = 0;
     for (var i = 0; i < this.cartData.length; i++) {
         total += this.cartData[i].count;

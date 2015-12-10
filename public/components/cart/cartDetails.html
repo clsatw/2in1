@@ -2,43 +2,46 @@
 <p class='text-info'>
     Here you can edit the items,
 go back to the store, clear the cart or checkout.</p>
-<div class="alert alert-warning" ng-show="cart.itemCount() < 1">
+<div class="alert alert-warning" ng-show="cart.getItemcount() < 1">
     Your cart is empty.
     <a href="#/products" class="alert-link">Click on here to back to store</a>
 </div>
-<section ng-hide="cart.itemCount() < 1">
+<section ng-hide="cart.getItemCount() < 1">
     <div class='col-md-8'>
         <table class="table table-bordered">
             <thead>
                 <tr class='well'>
-                    <th><b>Item</b></th>
+                    <th><span class="glyphicon glyphicon-tag"></span><b> Item</b></th>
                     <th>Quantity</th>
-                    <th class="tdRight">Price</th>
-                    <th class="tdRight">Subtotal</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in cart.cartData">
-                    <td class="tdLeft">{{item.name}}</td>
-                    <td class="tdRight">
-                        <div class='btn-group btn-group-sm'>
+                    <td class="tdCenter">{{item.name}}</td>
+                    <td class="tdCenter col-md-1">
+                        <!--
+                        <div class='btn-group btn-group-sm'> -->
                             <!-- use type=tel instead of  to prevent spinners -->
-                            <input type='tel' ng-model='item.count'
-                            ng-change="cart.saveItems()" />
-                            
+                            <!-- type number isn't supported in IE9 and earlier -->
+                            <form class='form-group'><input type='number' name='qty' size='2' min='1' max='99' ng-model='item.count'
+                            ng-change="cart.saveItems()" class='form-control'/></form>
+                            <!--
                             <label class="btn btn-success active"                          ng-disabled='item.count >= 1000'
                             ng-click="cart.addItem(item.id, item.name, item.price, +1)">+</label>
                             <label class="btn btn-warning"
                                 ng-disabled="item.count <= 1"
                             ng-click="cart.addItem(item.id, item.name, item.price, -1)">-</label>
-                        </div>
+                            
+                        </div> -->
                         
                     </td>
-                    <td class="tdRight">{{item.price | currency}}</td>
-                    <td class="tdRight">{{ (item.price * item.count) | currency}}</td>
+                    <td class="tdCenter">{{item.price | currency}}</td>
+                    <td class="tdCenter">{{ (item.price * item.count) | currency}}</td>
                     <td class='tdCenter' title='remove from cart'>
-                        <button ng-click="cart.remove(item.id)"
-                        class="btn btn-sm btn-warning">
+                        <button ng-click="cart.removeItem(item.id)"
+                        class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-remove"></span>
                         Remove
                         </button>
                     </td>
@@ -47,7 +50,7 @@ go back to the store, clear the cart or checkout.</p>
             <tfoot>
             <tr class='well'>
                 <td><b>Total</b></td>
-                <td class="tdRight"><b>{{cart.totalPrice() | currency}}</b></td>
+                <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
             </tr>
             </tfoot>
         </table>
@@ -55,22 +58,22 @@ go back to the store, clear the cart or checkout.</p>
     <!-- buttons -->
     <aside class="col-md-4">
         <div class=btn-wrapper>
-            <a class="btn btn-info" href="#/products"><i class="icon-chevron-left" /> Back to Store</a>
+            <a class="btn btn-info" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
 
-            <button class="btn btn-block btn-danger"
+            <button class="btn btn-block"
             ng-click="cart.emptyCart()">
-            <i class="icon-trash icon-white" /> Clear cart
+            <span class="glyphicon glyphicon-trash"></span> Clear cart
             </button>
         </div>
         <br />
         <div class='btn-wrapper'>
             <button class="btn btn-block btn-primary"
             ng-click="cart.checkOut('PayPal')">
-            <i class="icon-ok icon-white" /> Checkout with PayPal
+            <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-ok-sign"></span> Checkout with PayPal
             </button>
             <button class="btn btn-block btn-primary"
             ng-click="cart.checkOut('Google')">
-            <i class="icon-ok icon-white" /> Checkout with Google
+            <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-hand-right"></span> Checkout with Google
             </button>
         </div>
         <br />
@@ -85,7 +88,7 @@ go back to the store, clear the cart or checkout.</p>
             </button>
         </p>
     </aside>
-</section> bow
+</section>
 <!--
 <a class="btn btn-primary" href="#/placeorder">Place order now</a>
 -->
