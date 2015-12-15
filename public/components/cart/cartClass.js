@@ -1,4 +1,4 @@
-﻿//----------------------------------------------------------------
+//----------------------------------------------------------------
 // shopping cart constructor
 //
  function Cart(cartName) {
@@ -24,7 +24,7 @@
 
 Cart.prototype.getProducts = function() {
     return this.cartData;
-}
+};
 
 // load items from local storage
 Cart.prototype.loadCartData = function () {
