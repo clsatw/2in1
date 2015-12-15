@@ -13,14 +13,17 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             templateUrl: "../views/placeOrder.html"
         });
         $routeProvider.when("/cart", {
-            templateUrl: "../components/cart/cart.html"
+            template: "'<div cart='Details'></div>'"
+            //templateUrl: "/components/cart/cart.html"
         });
         $routeProvider.when("/store", {
-            templateUrl: "../views/store.html"
+            templateUrl: "/views/store.html",
+            controller: 'ProductListCtrl'
         });
         // $routeParams.productId (see the controller below)
         $routeProvider.when("/products/:productId", {
-            templateUrl: "../views/product.html"
+            templateUrl: "/views/product.html",
+            controller: 'ProdDetailCtrl'            
         });
         $routeProvider.when("/auth", {
             templateUrl: "../views/auth.html"
@@ -30,27 +33,19 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             templateUrl: '../views/userprofile.html'
         });
         $routeProvider.otherwise({
-            templateUrl: "../views/store.html"
+            controller: 'ProductListCtrl',
+            templateUrl: "/views/store.html"
         });
     })
-    .controller("StoreCtrl", function($scope, dataFactory) {
+    .controller("StoreCtrl", function($scope, dataFactory, cartService) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
         $scope.data = {};
         //$scope.user = {};
         $scope.order = {};
-        $scope.data.products = dataFactory.query();
+        $scope.data.products = dataFactory.query(); 
 
-        $scope.getProduct = function (sku) {
-            for (var i = 0; i < this.products.length; i++) {
-                if (this.products[i].sku == sku)
-                    return this.products[i];
-            }
-            return null;
-        }
-
-        // use routing to pick the selected product
-        if ($routeParams.productId != null) {
-            $scope.data.product = dataFactory.query($routeParams.ProductId);
+        $scope.add2Cart = function (product) {
+            cartService.cart.addItemToCart(product._id, product.name, product.price);
         }
     });

@@ -1,16 +1,14 @@
+<div class="page-header text-center">
+    <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+    <a href="/api/auth/logout" class="btn btn-default btn-sm">Logout</a>
+</div>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/api/auth/logout" class="btn btn-default btn-sm">Logout</a>
+<!-- GOOGLE INFORMATION -->
+<div>
+    <div class="well">
+        <p>
+            <strong>email</strong>: {{user.email}}<br>
+            <strong>name</strong>: {{user.name}}
+        </p>
     </div>
-	
-        <!-- GOOGLE INFORMATION -->
-        <div>
-            <div class="well">                
-                <p>
-                    <strong>email</strong>: {{user.email}}<br>
-                    <strong>name</strong>: {{user.name}}
-                </p>
-            </div>
-        </div>
-
+</div>

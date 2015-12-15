@@ -1,0 +1,32 @@
+﻿<div class="container">
+    <div class="row">
+        <div class='col-md-10'>
+            <!-- product info -->
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <img ng-src="{{prod.imgUrl}}" class='img-polaroid' alt="{{prod.name}} "/>
+                    </td>    
+                    <td>
+                        <h2>{{prod.name}}</h2>
+                    </td>
+                    <td>
+                        <p class='lead text-info'>{{prod.description}}</p>
+                    </td>
+                    <td class="tdRight">                      
+                        <span ng-show='cartService.cart.isItInCart(prod._id) === true'>this item is in the cart</span>                     
+                    </td>
+                </tr> 
+            </table>
+        </div>
+
+        <!-- buttons -->
+        <aside class='col-md-2 well'>
+            <div class='btn-wrapper'>
+                <button class='btn btn-success btn-block' ng-click='add2Cart(prod)'><span class="glyphicon glyphicon-plus"></span> Add to cart</button>
+                <a class="btn btn-info" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
+            </div>
+        </aside>
+    </div>
+</div>
+

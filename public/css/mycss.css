@@ -40,11 +40,13 @@ h3 {
 	display: block;
 	margin: 0 auto 0 auto;
 }
+/*
 img {
 	max-width: 120px;
 	height: auto;
 	display: inline-block;
 }
+*/
 .img-responsive {
 	margin: 0px auto;
 	border:3px solid lightgrey;

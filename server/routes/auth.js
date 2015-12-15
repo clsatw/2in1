@@ -103,7 +103,7 @@ router.route('/google').get(passport.authenticate('google', {
 router.route('/google/callback').get(
     passport.authenticate('google', opts));
 
-// DROPBOX
+/* DROPBOX
 router.route('/auth/dropbox').get(
     passport.authenticate('dropbox-oauth2')
 );
@@ -111,7 +111,7 @@ router.route('/auth/dropbox').get(
 router.route('/auth/dropbox/callback').get(
     passport.authenticate('dropbox-oauth2', opts)
     );
-
+*/
 // =====================================
 // LOGOUT ==============================
 // =====================================

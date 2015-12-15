@@ -1,23 +1,26 @@
 <p class="text-info">
-    Welcome to the Angular Store<br />
-Please select the products you want ….<br /></p>
-<p>
-    Search: <input ng-model="search"></p>
-    <main class="row" ng-controller="productListCtrl" ng-hide="data.error">
-    <aside class="col-md-2">
-        <a ng-click="selectCategory()"
-        class="btn btn-block btn-primary btn-lg">Categories</a>
+    Welcome to the Markie Store<br />
+Please select the products you want...<br /></p>
+<form class="form-inline">
+    <div class="input-group">
+        <input type="text" class="form-control search-query" ng-model="search">
+        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+    </div>
+</form><br/>
+<main class="row" ng-hide="data.error">
+    <aside class="col-md-2 well">
+        <a href="#/store"><h3>Categories</h3></a>
         <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
-            ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg"
+            ng-click="selectCategory(item)" class=" btn btn-block btn-info btn-md"
             ng-class="getCategoryClass(item)">
-            {{item}}
+            <strong>{{item}}</strong>
         </a>
     </aside>
     <div class='col-md-10'>
-        <table class='table table-responsive table-bordered'>
+        <table class='table table-responsive table-striped table-bordered'>
             <tr class="ngFade" ng-repeat="item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize">
                 <td class='tdCenter'>
-                    <a class='thumbnail' href="#/products/{{item._id}}">                    
+                    <a class='thumbnail' href="#/products/{{item._id}}">
                         <img ng-src="{{item.imgUrl}}" class='img-responsive' width = '180'height="auto">
                     </a>
                     <!-- <pre>{{item.imgUrl}}</pre> -->
@@ -25,8 +28,8 @@ Please select the products you want ….<br /></p>
                 
                 <td>
                     <a href="#/products/{{item._id}}">
-                    <strong>{{item.name}}</strong></a>
-                    <br/>{{item.description}}
+                    <h3>{{item.name}}</h3></a>
+                    <br/><p>{{item.description}}</p>
                 </td>
                 <td class='tdRight'>
                     <h4><mark>
@@ -40,8 +43,8 @@ Please select the products you want ….<br /></p>
                             <label>qty: </label>
                             <input name='qty' type='number' ng-model='qty' min='1' max='9' value=1  size='1'/>
                             -->
-                            <button class='btn-primary' ng-click='add2Cart(item)'>Add to Cart</button>
-                </td>
+                            <button class='btn btn-success btn-sm' ng-click='add2Cart(item)'><span class="glyphicon glyphicon-plus"></span> Add to Cart</button>
+                        </td>
             </tr>
         </table>
         <footer class="pull-right btn-group">
@@ -52,4 +55,4 @@ Please select the products you want ….<br /></p>
             </a>
         </footer>
     </div>
-    </main>
+</main>
