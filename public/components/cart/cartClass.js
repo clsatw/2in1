@@ -99,6 +99,13 @@ Cart.prototype.getItemCount = function() {
     }
     return total;
 }
+Cart.isItInCart = function (sku) {
+    for (var i = 0; i < this.cartData.length; i++) {
+        if (this.cartData[i]._id === sku)
+            return true;
+    }
+    return false;
+}   
 
 // clear the cart
 Cart.prototype.emptyCart = function() {
@@ -106,7 +113,9 @@ Cart.prototype.emptyCart = function() {
     this.saveCartData();    // save to local storage
 }
 
-// define checkout parameters
+/* CHECKOUT hereafter
+** define checkout parameters
+*/
 Cart.prototype.addCheckoutParameters = function(serviceName, merchantID, options) {
 
     // check parameters

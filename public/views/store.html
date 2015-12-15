@@ -1,27 +1,23 @@
 <p class="text-info">
     Welcome to the Markie Store<br />
-    Please select the products you want...<br /></p>
- 
-<form class="form-inline">    
-    <div class="input-group">       
-      <input type="text" class="form-control" ng-model="search">
-      <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>   
-  </div>
- </form><br/>  
-
-    <main class="row" ng-controller="productListCtrl" ng-hide="data.error">
+Please select the products you want...<br /></p>
+<form class="form-inline">
+    <div class="input-group">
+        <input type="text" class="form-control search-query" ng-model="search">
+        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+    </div>
+</form><br/>
+<main class="row" ng-hide="data.error">
     <aside class="col-md-2 well">
-        <a ng-click="selectCategory()"
-        class="btn btn-block btn-primary btn-lg"><span class="glyphicon glyphicon-filter"></span> Categories</a>
+        <a href="#/store"><h3>Categories</h3></a>
         <a ng-repeat="item in data.products | orderBy:'category' | unique:'category'"
             ng-click="selectCategory(item)" class=" btn btn-block btn-info btn-md"
             ng-class="getCategoryClass(item)">
             <strong>{{item}}</strong>
         </a>
     </aside>
-
     <div class='col-md-10'>
-        <table class='table table-responsive table-bordered'>
+        <table class='table table-responsive table-striped table-bordered'>
             <tr class="ngFade" ng-repeat="item in data.products | filter:categoryFilterFn | range:selectedPage:pageSize">
                 <td class='tdCenter'>
                     <a class='thumbnail' href="#/products/{{item._id}}">
@@ -32,8 +28,8 @@
                 
                 <td>
                     <a href="#/products/{{item._id}}">
-                    <strong>{{item.name}}</strong></a>
-                    <br/>{{item.description}}
+                    <h3>{{item.name}}</h3></a>
+                    <br/><p>{{item.description}}</p>
                 </td>
                 <td class='tdRight'>
                     <h4><mark>
@@ -49,14 +45,14 @@
                             -->
                             <button class='btn btn-success btn-sm' ng-click='add2Cart(item)'><span class="glyphicon glyphicon-plus"></span> Add to Cart</button>
                         </td>
-                    </tr>
-                </table>
-                <footer class="pull-right btn-group">
-                    <a ng-repeat="page in data.products | filter:categoryFilterFn | pageCount:pageSize"
-                        ng-click="selectPage($index + 1)" class="btn btn-default"
-                        ng-class="getPageClass($index + 1)">
-                        {{$index + 1}}
-                    </a>
-                </footer>
-            </div>
-            </main>
+            </tr>
+        </table>
+        <footer class="pull-right btn-group">
+            <a ng-repeat="page in data.products | filter:categoryFilterFn | pageCount:pageSize"
+                ng-click="selectPage($index + 1)" class="btn btn-default"
+                ng-class="getPageClass($index + 1)">
+                {{$index + 1}}
+            </a>
+        </footer>
+    </div>
+</main>

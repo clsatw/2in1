@@ -40,7 +40,4 @@ angular.module("app.cart", [])
                 "components/cart/cartSummary.html" : "components/cart/cartDetails.html";         
         }
     }
-});
-
-
-
+})
