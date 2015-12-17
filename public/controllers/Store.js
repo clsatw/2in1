@@ -36,7 +36,10 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             controller: 'ProductListCtrl',
             templateUrl: "/views/store.html"
         });
-    })
+    })    
+    .constant('USER', 'sdk-three_api1.sdk.com')
+    .constant('PWD', 'QFZCWN5HZM8VBG7Q')
+    .constant('SIGNATURE', 'A-IzJhZZjhg29XQ2qnhapuwxIDzyAZQ92FRP5dqBzVesOkzbdUONzmOU')
     .controller("StoreCtrl", function($scope, dataFactory, cartService) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  

@@ -1,3 +1,4 @@
+// set NODE_ENV environment variable at cmd prompt. e.g., set NODE_ENV = production 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';	// has to be before config coz config reads it
 var config = require('./server/config/config'),
 	//bodyParser = require('body-parser'),   
@@ -14,8 +15,7 @@ var app = express();
 require('./server/config/strategies/passport')(passport); // pass passport for configuration
 
 // Parsing environment variables
-var options = {};
-options.port = process.env.PORT || 5000;
+// var options = {};
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
@@ -39,6 +39,7 @@ app.set('view engine', 'ejs');
 
 var prods = require('./server/routes/prods');
 var auth = require('./server/routes/auth');
+var paypal = require('./server/routes/paypal.js');
 
 //app.use(session({secret: 'ilovescotchscotchyscotchscotch'})); // session secret
 app.use(passport.initialize());
@@ -55,6 +56,7 @@ app.use('/', function(req, res, next) {
 // router is mounted in a particular root url
 app.use('/api/auth', auth);
 app.use('/api/prods', prods);
+app.use('/paypal', paypal);
 
 mongoose.connect(config.db, function(err) {
 	if(err) {
@@ -64,6 +66,6 @@ mongoose.connect(config.db, function(err) {
     }
 });
 
-app.listen(options.port, function(req, res) {
-	console.info('Server running at http://localhost: ' + options.port);
+app.listen(config.port, function(req, res) {
+	console.info('Server running at http://localhost: ' + config.port);
 });

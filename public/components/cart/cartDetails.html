@@ -67,10 +67,12 @@ go back to the store, clear the cart or checkout.</p>
         </div>
         <br />
         <div class='btn-wrapper'>
-            <button class="btn btn-block btn-primary"
-            ng-click="cart.checkOut('PayPal')">
-            <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-ok-sign"></span> Checkout with PayPal
-            </button>
+            <form action="/paypal/pay" method="POST" id="payPalForm">
+                <a href="#" onclick="document.getElementById('payPalForm').submit();">
+                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-medium.png" alt="Check out with PayPal" />
+                </a>
+            </form>
+
             <button class="btn btn-block btn-primary"
             ng-click="cart.checkOut('Google')">
             <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-hand-right"></span> Checkout with Google
