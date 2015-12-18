@@ -99,7 +99,7 @@ Cart.prototype.getItemCount = function() {
     }
     return total;
 }
-Cart.isItInCart = function (sku) {
+Cart.prototype.isItInCart = function (sku) {
     for (var i = 0; i < this.cartData.length; i++) {
         if (this.cartData[i]._id === sku)
             return true;

@@ -1,11 +1,12 @@
 'use strict';
 angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "app.cart"])
-    //.constant('baseUrl', 'http://localhost:3000/')    
-    .config(function($routeProvider, $locationProvider) {
-        //$locationProvider.html5Mode({
-        //enabled: true,
-        //requireBase: false
-        //});
+    .config(function($routeProvider) {
+        /*
+        $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+        });
+        */
         $routeProvider.when("/complete", {
             templateUrl: "../views/thankYou.html"
         });
@@ -36,11 +37,15 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             controller: 'ProductListCtrl',
             templateUrl: "/views/store.html"
         });
-    })    
+    })
+    .constant('myConfig', {        
+        'BaseUrl': 'localhost',
+        'port': '5000'
+    })     
     .constant('USER', 'sdk-three_api1.sdk.com')
     .constant('PWD', 'QFZCWN5HZM8VBG7Q')
     .constant('SIGNATURE', 'A-IzJhZZjhg29XQ2qnhapuwxIDzyAZQ92FRP5dqBzVesOkzbdUONzmOU')
-    .controller("StoreCtrl", function($scope, dataFactory, cartService) {
+    .controller("StoreCtrl", function($scope, dataFactory, cartService, myConfig) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
         $scope.data = {};

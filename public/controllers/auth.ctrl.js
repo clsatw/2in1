@@ -1,9 +1,9 @@
 'use strict';
 angular.module("app")
-.constant('authUrl', 'http://clsa.asuscomm.com:5000/api/auth/')
+.constant('authUrl', '/api/auth/')
 .controller("app.authCtrl", function ($scope, $http) {
     $scope.user = {};
-    $http.get('http://clsa.asuscomm.com:5000/api/auth/getUserProfile').success(function(res) {
+    $http.get(authUrl + '/getUserProfile').success(function(res) {
         $scope.user.name = res.google.name || res.facebook.name || res.local.name; 
         $scope.user.email = res.google.email || res.facebook.email || res.local.email;;
     });

@@ -66,19 +66,20 @@ go back to the store, clear the cart or checkout.</p>
             </button>
         </div>
         <br />
-        <div class='btn-wrapper'>
-            <form action="/paypal/pay" method="POST" id="payPalForm">
-                <a href="#" onclick="document.getElementById('payPalForm').submit();">
-                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-medium.png" alt="Check out with PayPal" />
-                </a>
-            </form>
+        <div class='btn-wrapper'>               
+            <form id='myContainer' method='POST' action='/paypal/pay/'>                
+                <input type='text' name='qty' ng-value='cart.getItemCount()'>
+                <input type='text' name='amt' ng-value='cart.getTotalPrice()'>
+            </form>                            
+           
+        <!--    <form id='myContainer' ng-submit='sendPost()'></form> -->
 
             <button class="btn btn-block btn-primary"
             ng-click="cart.checkOut('Google')">
             <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-hand-right"></span> Checkout with Google
             </button>
         </div>
-        <br />
+        <!-- <br />
         <section class="btn-wrapper">
             <button class="btn btn-block btn-link"
             ng-click="cart.checkOut('PayPal')">
@@ -88,7 +89,7 @@ go back to the store, clear the cart or checkout.</p>
             ng-click="cart.checkOut('Google')">
             <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
             </button>
-        </p>
+        </section> -->
     </aside>
 </section>
 <!--

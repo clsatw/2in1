@@ -1,12 +1,12 @@
 'use strict';
 
 var express = require('express');
-// returens router instanace which can be mounted as a middleware
-var router = express.Router();
 
 //var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//var multer = require('multer'); 
+//var upload = multer();	// for parsing multipar/form-data
 var path = require('path');
 var app = express();
 
@@ -15,15 +15,28 @@ var uuid = require('node-uuid');
 var PayPal = require('../lib/index');
 
 // TODO: Put your PayPal settings here:
-var returnUrl = 'http://localhost:5000/paypal/success';
+//var returnUrl = 'http://localhost:5000/paypal/success';
+var returnUrl = 'https://www.paypal.com/checkoutnow/';
 var cancelUrl = 'http://localhost:5000/paypal/cancel';
 console.log(returnUrl);
 //app.use(favicon());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+
+var jsonParser = bodyParser.json();
+// create application/x-www-form-urlencoded parser 
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+//app.use(bodyParser.json());	// for parsing applicatin/json
+// parse application/x-www-form-urlencoded
+//app.use(bodyParser.urlencoded({extended: false}));
+
+process.env.API_USERNAME = 'sdk-three_api1.sdk.com';
+process.env.API_PASSWORD = 'QFZCWN5HZM8VBG7Q';
+process.env.API_SIGNATURE = 'A-IzJhZZjhg29XQ2qnhapuwxIDzyAZQ92FRP5dqBzVesOkzbdUONzmOU';
+
 //app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
-
+// returens router instanace which can be mounted as a middleware
+var router = express.Router();
 /**
  * React to pay POST. This will create paypal pay url and redirect user there. 
  * @param  {[type]} req  [description]
@@ -31,27 +44,34 @@ app.use(bodyParser.urlencoded());
  * @return {[type]}      [description]
  */
 // the root path relative to the path where it's mounted.
-router.route('/pay').post(function(req, res) {
+router.route('/pay').post(urlencodedParser, function(req, res) {
 	// create paypal object in sandbox mode. If you want non-sandbox remove tha last param.
 	var paypal = PayPal.create(process.env.API_USERNAME, process.env.API_PASSWORD, process.env.API_SIGNATURE, true);
-	console.log(paypal);
-	paypal.setPayOptions('ACME Soft', null, process.env.logoImage, '00ff00', 'eeeeee');
-
+	var cart = req.body;
+	console.log(cart.amt);
+	/*
+	var o = {};
+	o = req.body.cart;
+	for (var i=0; i < o.length; i++)
+		console.log(o[i]);
+	*/
+	paypal.setPayOptions('Markie Store', null, process.env.logoImage, '00ff00', 'eeeeee');
+/*	we don't set products so paypal won't compare orders and payment's qty and amt.
 	paypal.setProducts([{ 
 		name: 'ACME Drill', 
-		description: 'Amazing drill', 
-		quantity: 1, 
-		amount: 100.99 
+		//description: 'Amazing drill', 
+		quantity: cart.qty, 
+		amount: cart.amt/cart.qty
 	}]);
-
+*/
 	// Invoice must be unique.
 	var invoice = uuid.v4();
 	paypal.setExpressCheckoutPayment(
 		'test@email.com', 
 		invoice, 
-		100.99, 
-		'This is really amazing product you are getting', 
-		'USD', 
+		cart.amt, 
+		'Thanks for placing your order.',
+		'TWD', 
 		returnUrl, 
 		cancelUrl, 
 		false,
@@ -61,9 +81,10 @@ router.route('/pay').post(function(req, res) {
 			res.status(500).send(err);
 			return;
 		}
-
+		console.log(data.redirectUrl);
 		// Regular paid.
 		res.redirect(data.redirectUrl);
+		//res.status(200).send('<html><body></body><script>window.location.href=%s</script></html>', data.redirectUrl);
 	});
 });
 
