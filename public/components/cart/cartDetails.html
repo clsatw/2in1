@@ -1,97 +1,87 @@
-<h2>Your cart</h2>
-<p class='text-info'>
-    Here you can edit the items,
-go back to the store, clear the cart or checkout.</p>
-<div class="alert alert-warning" ng-show="cart.getItemcount() < 1">
-    Your cart is empty.
-    <a href="#/products" class="alert-link">Click on here to back to store</a>
-</div>
-<section ng-hide="cart.getItemCount() < 1">
-    <div class='col-md-8'>
-        <table class="table table-bordered">
-            <thead>
-                <tr class='well'>
-                    <th><span class="glyphicon glyphicon-tag"></span><b> Item</b></th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in cart.cartData">
-                    <td class="tdCenter">{{item.name}}</td>
-                    <td class="tdCenter col-md-1">
-                        <!--
-                        <div class='btn-group btn-group-sm'> -->
-                            <!-- use type=tel instead of  to prevent spinners -->
-                            <!-- type number isn't supported in IE9 and earlier -->
-                            <form class='form-group'><input type='number' name='qty' size='2' min='1' max='99' ng-model='item.count'
-                            ng-change="cart.saveItems()" class='form-control'/></form>
-                            <!--
-                            <label class="btn btn-success active"                          ng-disabled='item.count >= 1000'
-                            ng-click="cart.addItem(item.id, item.name, item.price, +1)">+</label>
-                            <label class="btn btn-warning"
-                                ng-disabled="item.count <= 1"
-                            ng-click="cart.addItem(item.id, item.name, item.price, -1)">-</label>
-                            
-                        </div> -->
-                        
-                    </td>
-                    <td class="tdCenter">{{item.price | currency}}</td>
-                    <td class="tdCenter">{{ (item.price * item.count) | currency}}</td>
-                    <td class='tdCenter' title='remove from cart'>
-                        <button ng-click="cart.removeItem(item.id)"
-                        class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-remove"></span>
-                        Remove
+
+        <h2> Your Cart </h2>
+        <p class='text-info'>Here you can edit the items, go back to the store, clear the cart or checkout.</p>
+        <div class="alert alert-warning" ng-show="cart.getItemcount() < 1">
+            Your cart is empty.
+            <a href="#/products" class="alert-link">Click on here to back to store</a>
+        </div>
+        <section class='row' ng-hide="cart.getItemCount() < 1">
+            <div class='col-md-8'>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class='well'>
+                            <th><span class="glyphicon glyphicon-tag"></span><b> Item</b></th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in cart.cartData">
+                            <td class="tdCenter">{{item.name}}</td>
+                            <td class="tdCenter col-md-1">
+                                <!--
+                                <div class='btn-group btn-group-sm'> -->
+                                    <!-- use type=tel instead of  to prevent spinners -->
+                                    <!-- type number isn't supported in IE9 and earlier -->
+                                    <form class='form-group'><input type='number' name='qty' size='2' min='1' max='99' ng-model='item.count'
+                                    ng-change="cart.saveItems()" class='form-control'/></form>
+                                    <!--
+                                    <label class="btn btn-success active"                          ng-disabled='item.count >= 1000'
+                                    ng-click="cart.addItem(item.id, item.name, item.price, +1)">+</label>
+                                    <label class="btn btn-warning"
+                                        ng-disabled="item.count <= 1"
+                                    ng-click="cart.addItem(item.id, item.name, item.price, -1)">-</label>
+                                    
+                                </div> -->
+                                
+                            </td>
+                            <td class="tdCenter">{{item.price | currency}}</td>
+                            <td class="tdCenter">{{ (item.price * item.count) | currency}}</td>
+                            <td class='tdCenter' title='remove from cart'>
+                                <button ng-click="cart.removeItem(item.id)"
+                                class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-remove"></span>
+                                Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr class='well'>
+                        <td><b>Total</b></td>
+                        <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- buttons -->
+            <aside class="col-md-4">
+                <div class=btn-wrapper>
+                    <a class="btn btn-info btn-block" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
+                    <button class="btn btn-warning btn-block"
+                    ng-click="cart.emptyCart()">
+                    <span class="glyphicon glyphicon-trash"></span> Clear cart
+                    </button>
+
+                    <script src="//www.paypalobjects.com/api/checkout.js" async></script>
+
+                    <form id='myContainer' method='post' action='/paypal/pay/'>
+                        <input type='hidden' name='qty' ng-value='cart.getItemCount()'>
+                        <input type='hidden' name='amt' ng-value='cart.getTotalPrice()'>
+                        <button id="t2" type="submit" class="checkout paypal-button-hidden btn btn-block">
+                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/PP_AcceptanceMarkTray-NoDiscover_243x40.png" alt="Buy now with PayPal" />
                         </button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-            <tr class='well'>
-                <td><b>Total</b></td>
-                <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
-    <!-- buttons -->
-    <aside class="col-md-4">
-        <div class=btn-wrapper>
-            <a class="btn btn-info" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
-
-            <button class="btn btn-block"
-            ng-click="cart.emptyCart()">
-            <span class="glyphicon glyphicon-trash"></span> Clear cart
-            </button>
-        </div>
-        <br />
-        <div class='btn-wrapper'>               
-            <form id='myContainer' method='POST' action='/paypal/pay/'>                
-                <input type='text' name='qty' ng-value='cart.getItemCount()'>
-                <input type='text' name='amt' ng-value='cart.getTotalPrice()'>
-            </form>                            
-           
-        <!--    <form id='myContainer' ng-submit='sendPost()'></form> -->
-
-            <button class="btn btn-block btn-primary"
-            ng-click="cart.checkOut('Google')">
-            <i class="icon-ok icon-white" /><span class="glyphicon glyphicon-hand-right"></span> Checkout with Google
-            </button>
-        </div>
-        <!-- <br />
-        <section class="btn-wrapper">
-            <button class="btn btn-block btn-link"
-            ng-click="cart.checkOut('PayPal')">
-            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
-            </button>
-            <button class="btn btn-block btn-link"
-            ng-click="cart.checkOut('Google')">
-            <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
-            </button>
-        </section> -->
-    </aside>
-</section>
-<!--
-<a class="btn btn-primary" href="#/placeorder">Place order now</a>
--->
+                    </form>
+                     <script>
+                        window.paypalCheckoutReady = function() {
+                            paypal.checkout.setup('YTK9ZFNLT4S5Y', {
+                            locale: 'cn_TW',
+                            environment: 'sandbox',
+                            button: ['t2']            
+                            });
+                        }    
+                    </script>
+                </div>
+            </aside>
+        </section>

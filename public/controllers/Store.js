@@ -13,10 +13,11 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         $routeProvider.when("/placeorder", {
             templateUrl: "../views/placeOrder.html"
         });
+        
         $routeProvider.when("/cart", {
             template: "'<div cart='Details'></div>'"
-            //templateUrl: "/components/cart/cart.html"
         });
+        
         $routeProvider.when("/store", {
             templateUrl: "/views/store.html",
             controller: 'ProductListCtrl'

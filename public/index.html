@@ -5,17 +5,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Markie Store</title>
+        <script src="./bower_components/jquery/dist/jquery.min.js"></script>
         <script src="./bower_components/angular/angular.js"></script>
         <script src="./bower_components/angular-animate/angular-animate.js"></script>
         <script src="./bower_components/angular-route/angular-route.js"></script>
         <script src="./bower_components/angular-resource/angular-resource.js"></script>
+       
+        <!--
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <script src='./bower_components/angular-payments/lib/angular-payments.js'></script>
-        <script src="./bower_components/jquery/dist/jquery.min.js"></script>
-      
         <script type="text/javascript">
             Stripe.setPublishableKey('pk_test_p0QQDCeJQA7W9X9y0VP7QOz5');
         </script>
+         <script src='./bower_components/angular-payments/lib/angular-payments.js'></script>           
+        -->       
+       
         <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
         <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
         <link href="./css/mycss.css" rel='stylesheet'/>
@@ -29,6 +32,7 @@
         <script src="components/cart/cart.js"></script>
         <script src="controllers/auth.ctrl.js"></script>
         <script src="controllers/prodDetail.ctrl.js"></script>
+      
     </head>
     <body ng-controller="StoreCtrl">
         <header class='container'>
@@ -40,15 +44,16 @@
                 <span cart='Summary'></span>
             </div>
         </header>
-        <section class='container'>
+
+        <section class='container'>        
             <div class="alert alert-danger" ng-show="data.error">
                 Error ({{data.error.status}}). The product data was not loaded.
                 <a href="/index.html" class="alert-link">Click here to try again</a>
             </div>
             
-            <div ng-view class="ngFade"></div>
-            
+            <div ng-view class="ngFade"></div>            
         </section>
+
         <footer class='container'>
             <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>
             <address>
@@ -58,16 +63,16 @@
         <address>
             <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
         </address>
-    </footer>
-    <script>
-        window.paypalCheckoutReady = function () {
-            paypal.checkout.setup('YTK9ZFNLT4S5Y', {
-                locale: 'en_US',
+    </footer>    
+        <script>
+            window.paypalCheckoutReady = function() {
+                paypal.checkout.setup('YTK9ZFNLT4S5Y', {
+                locale: 'cn_TW',
                 environment: 'sandbox',
-                container: 'myContainer'
-              });
-        }
-    </script> 
-    <script src="//www.paypalobjects.com/api/checkout.js" async></script>              
+                container: 'myContainer'            
+                });
+            }    
+        </script>
+                  
 </body>
 </html>
