@@ -1,13 +1,16 @@
 'use strict';
-var userProfile = {};
-var baseUri = '/api/auth/';
+
 var express = require('express');
-var passport = require('passport');
+// var passport = require('passport');
 // required for passport
 //var app = express();
 // return router instance which can be mounted as a middleware.
 var router = express.Router();
 
+module.exports = function(passport){
+
+var userProfile = {};
+var baseUri = '/api/auth/';
 var opts = {
     successRedirect: baseUri + 'profile',
     failureRedirect: baseUri        
@@ -21,10 +24,10 @@ var opts = {
 // =====================================
 // HOME PAGE (with login links) ========
 // =====================================
-router.route('/').get(function(req, res) {
-    //res.sendFile(__dirname + '/auth.html'); // load the index.ejs file
-    res.render('auth.ejs');
-});
+//router.route('/').get(function(req, res) {
+//    res.sendFile(__dirname + '/auth.html'); // load the index.ejs file
+    //res.render('auth.ejs');
+//});
 
 router.route('/login')
     // show the login form
@@ -36,7 +39,8 @@ router.route('/login')
     })
     // process the login form
     // app.post('/login', do all our passport stuff here);
-    .post(passport.authenticate('local-login', {
+    // call login strategy with login api
+    .post(passport.authenticate('login', {
         successRedirect: baseUri + 'profile', // redirect to the secure profile section
         failureRedirect: baseUri + 'login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
@@ -53,12 +57,19 @@ router.route('/signup')
     })
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
-    .post(passport.authenticate('local-signup', {
+    .post(passport.authenticate('signup', {
         successRedirect: baseUri + 'profile', // redirect to the secure profile section
         failureRedirect: baseUri + 'signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
-
+    // sends successful Login state back to angular
+    router.get('/success', function(req, res){
+        res.send({state: 'success', user: req.user ? req.user : null});
+    });
+    // sends failure Login state back to angular
+    router.get('/failure', function(req, res){
+        res.send({state: 'failure', user: null, message: 'Invalid username or password'});
+    });
 // =====================================
 // PROFILE SECTION =====================
 // =====================================
@@ -103,21 +114,12 @@ router.route('/google').get(passport.authenticate('google', {
 router.route('/google/callback').get(
     passport.authenticate('google', opts));
 
-/* DROPBOX
-router.route('/auth/dropbox').get(
-    passport.authenticate('dropbox-oauth2')
-);
-
-router.route('/auth/dropbox/callback').get(
-    passport.authenticate('dropbox-oauth2', opts)
-    );
-*/
 // =====================================
 // LOGOUT ==============================
 // =====================================
 router.route('/logout').get(function(req, res) {
     req.logout();
-    res.redirect(baseUri);
+    //res.redirect(baseUri);
 });
 
 // route middleware to make sure a user is logged in
@@ -129,4 +131,6 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect(baseUri);
 };
-module.exports = router;
+// Express use function for routers expect to have a router obj back.
+return router;
+}

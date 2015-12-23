@@ -16,16 +16,15 @@ angular.module("app.cart", [])
 .directive("cart", function (cartService) {
     return {
         restrict: "A",
-        controller: function($scope) {
+        controller: function($scope, $http) {
             $scope.cart = cartService.cart;  
-            /*          
+                      
             $scope.sendPost = function() {
                 var data = $scope.cart.cartData;
                 $http.post('http://localhost:5000/paypal/pay', {'data': data}).success(function(data, stauts){
                     console.log(data);
                 })                
-            }
-            */
+            }            
         },
         templateUrl: function(elem, attrs) {
             return (attrs['cart'] === 'Summary') ? 

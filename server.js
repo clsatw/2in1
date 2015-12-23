@@ -12,7 +12,7 @@ var config = require('./server/config/config'),
 	flash = require('connect-flash');
 
 var app = express();
-require('./server/config/strategies/passport')(passport); // pass passport for configuration
+//require('./server/config/strategies/passport')(passport); // pass passport for configuration
 
 // Parsing environment variables
 // var options = {};
@@ -38,12 +38,17 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 var prods = require('./server/routes/prods');
-var auth = require('./server/routes/auth');
+// here we pass in passport as the param, so there is no need to require passport in auth.js
+var auth = require('./server/routes/auth')(passport);
 var paypal = require('./server/routes/paypal.js');
 
 //app.use(session({secret: 'ilovescotchscotchyscotchscotch'})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+// init passport
+var initPassport = require('./server/config/strategies/passport-init');
+initPassport(passport);
+
 app.use(flash());
 /*
 app.use(function(req, res, next) {
@@ -51,7 +56,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-*/
+*/ 
 app.use('/', express.static(__dirname + '/public'));
 // telling browser to cache it
 app.use('/', function(req, res, next) {

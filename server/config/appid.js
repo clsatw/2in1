@@ -5,16 +5,16 @@ module.exports = {
     'facebookAuth': {
         'clientID': '1461213957468888', // your App ID
         'clientSecret': 'your-client-secret-here', // your App Secret
-        'callbackURL': 'http://localhost:3000/api/auth/facebook/callback'
+        'callbackURL': 'http://localhost:5000/api/auth/facebook/callback'
     },
     'twitterAuth': {
         'consumerKey': 'your-consumer-key-here',
         'consumerSecret': 'your-client-secret-here',
-        'callbackURL': 'http://localhost:3000/api/auth/twitter/callback'
+        'callbackURL': 'http://localhost:5000/api/auth/twitter/callback'
     },
     'googleAuth': {
         'clientID': '539204867158-vlolikrdh2qki7oianm1ef85hshtks0f.apps.googleusercontent.com',
         'clientSecret': 'ZXwuVzOJTH9Ers5gydhOgKvI',
-        'callbackURL': 'http://localhost:3000/api/auth/google/callback'
+        'callbackURL': 'http://ubuy.asuscomm.com:5000/api/auth/google/callback'
     }
 };

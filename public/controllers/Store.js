@@ -28,7 +28,7 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
             controller: 'ProdDetailCtrl'            
         });
         $routeProvider.when("/auth", {
-            templateUrl: "../views/auth.html"
+            templateUrl: "/views/auth.html"
         });
         $routeProvider.when('/getUserProfile', {
             controller: 'app.authCtrl',
@@ -49,8 +49,7 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
     .controller("StoreCtrl", function($scope, dataFactory, cartService, myConfig) {
         // isArry: true to specifies that the response will be json (from mongodb)
         //$scope.productsResource = $resource(dataUrl);  
-        $scope.data = {};
-        //$scope.user = {};
+        $scope.data = {};       
         $scope.order = {};
         $scope.data.products = dataFactory.query(); 
 

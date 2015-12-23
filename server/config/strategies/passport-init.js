@@ -10,6 +10,8 @@ var User = require('../../models/user.model');
 var configAuth = require('../appid');
 
 // expose this function to our app using module.exports
+// the our app can call this func and passes in passport as param, so we don't need to 
+// require passport here.
 module.exports = function(passport) {
 
     // =========================================================================
@@ -20,12 +22,14 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
+        // tell passport which id to use for user
         done(null, user.id);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
+            // return user obj back
             done(err, user);
         });
     });
@@ -153,13 +157,13 @@ module.exports = function(passport) {
     // =========================================================================
     // we are using named strategies since we have one for login and one for signup
     // by default, if there was no name, it would just be called 'local'
-    passport.use('local-signup', new LocalStrategy({
+    passport.use('signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
-        function(req, email, password, done) {
+        function(req, email, password, done) {  // call back func
 
             // asynchronous
             // User.findOne wont fire unless data is sent back
@@ -201,7 +205,7 @@ module.exports = function(passport) {
 
         }));
 
-    passport.use('local-login', new LocalStrategy({
+    passport.use('login', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
@@ -220,11 +224,11 @@ module.exports = function(passport) {
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('loginMessage', 'user not found')); // req.flash is the way to set flashdata using connect-flash
 
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                    return done(null, false, req.flash('loginMessage', 'invalid password')); // create the loginMessage and save it to session as flashdata
 
                 // all is well, return successful user
                 return done(null, user);

@@ -104,7 +104,7 @@ router.route('/success').get(function(req, res) {
 
 		// Check token and details.
 		var resObj = JSON.stringify(data);
-		res.send('Successfuly payment, ' + resObj);
+		res.send('../Successfuly payment, ' + resObj);
 	});
 });
 	

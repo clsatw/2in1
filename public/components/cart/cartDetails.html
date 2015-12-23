@@ -1,5 +1,5 @@
 
-        <h2> Your Cart </h2>
+        <h2 class='text-danger'> Your Cart </h2>
         <p class='text-info'>Here you can edit the items, go back to the store, clear the cart or checkout.</p>
         <div class="alert alert-warning" ng-show="cart.getItemcount() < 1">
             Your cart is empty.
@@ -10,10 +10,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr class='well'>
-                            <th><span class="glyphicon glyphicon-tag"></span><b> Item</b></th>
+                            <th class='text-center'><span class="glyphicon glyphicon-tag"></span><b> Item</b></th>
                             <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Subtotal</th>
+                            <th class='text-center'>Price</th>
+                            <th class='text-center'>Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,9 +47,9 @@
                         </tr>
                     </tbody>
                     <tfoot>
-                    <tr class='well'>
+                    <tr class='well text-danger'>
                         <td><b>Total</b></td>
-                        <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
+                        <td><b>{{cart.getTotalPrice() | currency}}</b></td>
                     </tr>
                     </tfoot>
                 </table>
@@ -58,7 +58,7 @@
             <!-- buttons -->
             <aside class="col-md-4">
                 <div class=btn-wrapper>
-                    <a class="btn btn-info btn-block" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
+                    <a class="btn btn-primary btn-block" href="#/products"><span class="glyphicon glyphicon-arrow-up"></span> Back to Store</a>
                     <button class="btn btn-warning btn-block"
                     ng-click="cart.emptyCart()">
                     <span class="glyphicon glyphicon-trash"></span> Clear cart
@@ -66,7 +66,7 @@
 
                     <script src="//www.paypalobjects.com/api/checkout.js" async></script>
 
-                    <form id='myContainer' method='post' action='/paypal/pay/'>
+                    <form  role='form' id='myContainer' method='post' action='/paypal/pay'>
                         <input type='hidden' name='qty' ng-value='cart.getItemCount()'>
                         <input type='hidden' name='amt' ng-value='cart.getTotalPrice()'>
                         <button id="t2" type="submit" class="checkout paypal-button-hidden btn btn-block">
