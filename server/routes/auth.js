@@ -12,8 +12,8 @@ module.exports = function(passport){
 var userProfile = {};
 var baseUri = '/api/auth/';
 var opts = {
-    successRedirect: baseUri + 'profile',
-    failureRedirect: baseUri        
+    successRedirect: baseUri + 'success',
+    failureRedirect: baseUri + 'failure'        
 }
 // configure app
 //var bodyParser = require('body-parser');
@@ -41,7 +41,7 @@ router.route('/login')
     // app.post('/login', do all our passport stuff here);
     // call login strategy with login api
     .post(passport.authenticate('login', {
-        successRedirect: baseUri + 'profile', // redirect to the secure profile section
+        successRedirect: baseUri + 'success', // redirect to the secure profile section
         failureRedirect: baseUri + 'login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -64,7 +64,9 @@ router.route('/signup')
     }));
     // sends successful Login state back to angular
     router.get('/success', function(req, res){
-        res.send({state: 'success', user: req.user ? req.user : null});
+        //res.redirect('#/getUserProfile');
+        res.sendFile('../../public/views/userprofile.html', {root: __dirname});  // __driname = routers
+        //res.send({state: 'success', user: req.user ? req.user : null});
     });
     // sends failure Login state back to angular
     router.get('/failure', function(req, res){
@@ -86,6 +88,7 @@ router.route('/profile').get(isLoggedIn, function(req, res) {
     });
     */
 });
+
 router.route('/getUserProfile').get(function(req, res) {
     console.log(userProfile);
     res.json(userProfile);
@@ -112,14 +115,14 @@ router.route('/google').get(passport.authenticate('google', {
 
 // the callback after google has authenticated the user
 router.route('/google/callback').get(
-    passport.authenticate('google', opts));
+    passport.authenticate('google', opts)); // redirect to success or failure
 
 // =====================================
 // LOGOUT ==============================
 // =====================================
 router.route('/logout').get(function(req, res) {
     req.logout();
-    //res.redirect(baseUri);
+    res.redirect('/');  // back to store
 });
 
 // route middleware to make sure a user is logged in

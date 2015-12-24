@@ -37,6 +37,7 @@ process.env.API_SIGNATURE = 'A-IzJhZZjhg29XQ2qnhapuwxIDzyAZQ92FRP5dqBzVesOkzbdUO
 // app.use(express.static(path.join(__dirname, 'public')));
 // returens router instanace which can be mounted as a middleware
 var router = express.Router();
+
 /**
  * React to pay POST. This will create paypal pay url and redirect user there. 
  * @param  {[type]} req  [description]

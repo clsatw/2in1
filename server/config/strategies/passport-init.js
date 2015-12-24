@@ -23,14 +23,19 @@ module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         // tell passport which id to use for user
-        done(null, user.id);
+        done(null, user._id);
     });
 
-    // used to deserialize the user
+    // deserialize user will call with the unique id provided by serializeUser
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
-            // return user obj back
-            done(err, user);
+            if(err)
+               return done(err, false);
+            if(!user){
+                return done('user not found', false);
+            }
+            // we found the user object provide it back to passport
+            return done(user, true);
         });
     });
     // =========================================================================
@@ -171,12 +176,10 @@ module.exports = function(passport) {
 
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
-                User.findOne({
-                    'local.email': email
-                }, function(err, user) {
+                User.findOne({'local.email': email}, function(err, user) {
                     // if there are any errors, return the error
                     if (err)
-                        return done(err);
+                        return done(err, false);
 
                     // check to see if theres already a user with that email
                     if (user) {
@@ -215,9 +218,7 @@ module.exports = function(passport) {
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            User.findOne({
-                'local.email': email
-            }, function(err, user) {
+            User.findOne({'local.email': email}, function(err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
                     return done(err);

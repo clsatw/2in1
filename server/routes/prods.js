@@ -9,6 +9,17 @@ var Prods = require('../models/prods.model');
 var router = express.Router();
 var bodyParser = require('body-parser'); 
 var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
+/*
+router.use(function(req, res, next){
+	//if(req.method === 'GET'){
+	//	return next();
+	//}	
+	if(!req.isAuthenticated()) {
+		res.redirect('/#auth');
+	}
+	return next();
+})
+*/
 
 // configure app
 //var bodyParser = require('body-parser');
@@ -22,7 +33,7 @@ router.route('/')
 	.get(function(req, res) {
 		Prods.find(function(err, data) {
 			if (err)
-				res.send(err);
+				res.send(500, err);
 			res.status(200).json(data);
 		})
 	})
@@ -36,8 +47,7 @@ router.route('/')
 		data.save(function(err) {
 			if (err) {
 				console.log(err);
-				res.send(err);
-				return;
+				return res.send(500, err);				
 			}
 			// give some success message
 			//console.log(data);
@@ -51,8 +61,7 @@ router.route('/:id')
 	.get(function(req, res) {
 		Prods.findById(req.params.id, function(err, data) {
 			if (err) {
-				res.send(err);
-				return;
+				return res.send(500, err);				
 			}
 			res.status(200).json(data);
 		})
@@ -90,7 +99,7 @@ router.route('/:id')
 			_id: req.params.id
 		}, function(err, data) {
 			if (err)
-				res.send(err);
+				res.send(500, err);
 			// give some success message
 			//res.sendStatus(200);
 			res.status(200);
