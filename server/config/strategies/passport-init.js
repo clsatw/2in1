@@ -140,23 +140,7 @@ module.exports = function(passport) {
             });
 
         }));
-
-    // DropBox
-    /*
-    passport.use(new DropboxOAuth2Strategy({
-            clientID: DROPBOX_CLIENT_ID,
-            clientSecret: DROPBOX_CLIENT_SECRET,
-            callbackURL: "https://www.example.net/auth/dropbox-oauth2/callback"
-        },
-        function(accessToken, refreshToken, profile, done) {
-            User.findOrCreate({
-                providerId: profile.id
-            }, function(err, user) {
-                return done(err, user);
-            });
-        }
-    ));
-    */
+   
     // =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
@@ -169,17 +153,21 @@ module.exports = function(passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function(req, email, password, done) {  // call back func
-
+            console.log(email);
             // asynchronous
             // User.findOne wont fire unless data is sent back
-            process.nextTick(function() {
+            //process.nextTick(function() {
 
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
+               
                 User.findOne({'local.email': email}, function(err, user) {
                     // if there are any errors, return the error
-                    if (err)
+                    console.log(email);
+                    if (err){
+                        console.log(err);
                         return done(err, false);
+                    }
 
                     // check to see if theres already a user with that email
                     if (user) {
@@ -195,16 +183,17 @@ module.exports = function(passport) {
                         newUser.local.password = newUser.generateHash(password);
 
                         // save the user
-                        newUser.save(function(err) {
+                        newUser.save(function(err, newUser) {
                             if (err)
-                                throw err;
+                                return don(err, false);
+                            console.log('successfully signed up user ' + email);
                             return done(null, newUser);
                         });
                     }
 
                 });
 
-            });
+            //});
 
         }));
 

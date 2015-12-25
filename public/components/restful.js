@@ -13,6 +13,7 @@ $get()      Refreshes the object from the server, clearing any uncommitted local
 $save()     Saves the object to the server
 The $save method is the simplest to work with. Here is how I used it in the updateProduct behavior
 */
+// method post = save()
 'use strict';
 angular.module("app.restful", ['ngResource'])
     .constant("dataUrl", '/api/prods/')

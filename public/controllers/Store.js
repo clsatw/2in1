@@ -1,5 +1,13 @@
 'use strict';
 angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "app.cart"])
+    .run(function($rootScope){
+        $rootScope.auth = false;
+        $rootScope.current_user ='';
+
+        $rootScope.logout = function(){
+            $http.get('/api/logout');
+        }
+    })
     .config(function($routeProvider) {
         /*
         $locationProvider.html5Mode({
@@ -7,6 +15,14 @@ angular.module('app', ['app.restful', "customFilters", "ngRoute", "ngAnimate", "
         requireBase: false
         });
         */
+        $routeProvider.when("/login", {
+            templateUrl: "../views/login.html",
+            controller: 'app.authCtrl'
+        });
+        $routeProvider.when("/signup", {
+            templateUrl: "../views/signup.html",
+            controller: 'app.authCtrl'
+        });
         $routeProvider.when("/complete", {
             templateUrl: "../views/thankYou.html"
         });

@@ -29,54 +29,35 @@ var opts = {
     //res.render('auth.ejs');
 //});
 
-router.route('/login')
-    // show the login form
-    .get(function(req, res) {
-        // render the page and pass in any flash data if it exists
-        res.render('login.ejs', {
-            message: req.flash('loginMessage')
-        });
-    })
-    // process the login form
-    // app.post('/login', do all our passport stuff here);
-    // call login strategy with login api
-    .post(passport.authenticate('login', {
+// process the login form
+// app.post('/login', do all our passport stuff here);
+// call login strategy with login api
+router.post('/login', passport.authenticate('login', {
         successRedirect: baseUri + 'success', // redirect to the secure profile section
-        failureRedirect: baseUri + 'login', // redirect back to the signup page if there is an error
+        failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
-    }));
+}));
 
-router.route('/signup')
-    // show the signup form
-    .get(function(req, res) {
-
-        // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', {
-            message: req.flash('signupMessage')
-        });
-    })
-    // process the signup form
-    // app.post('/signup', do all our passport stuff here);
-    .post(passport.authenticate('signup', {
-        successRedirect: baseUri + 'profile', // redirect to the secure profile section
-        failureRedirect: baseUri + 'signup', // redirect back to the signup page if there is an error
+// process the signup form
+// app.post('/signup', do all our passport stuff here);
+router.post('/signup', passport.authenticate('signup', {
+        successRedirect: baseUri + 'success', // redirect to the secure profile section
+        failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
-    }));
+}));
     // sends successful Login state back to angular
-    router.get('/success', function(req, res){
-        //res.redirect('#/getUserProfile');
-        res.sendFile('../../public/views/userprofile.html', {root: __dirname});  // __driname = routers
-        //res.send({state: 'success', user: req.user ? req.user : null});
-    });
-    // sends failure Login state back to angular
-    router.get('/failure', function(req, res){
-        res.send({state: 'failure', user: null, message: 'Invalid username or password'});
-    });
+router.get('/success', function(req, res){
+    res.send({state: 'success', user: req.user ? req.user : null});
+});
+// sends failure Login state back to angular
+router.get('/failure', function(req, res){
+    res.send({state: 'failure', user: null, message: 'Invalid username or password'});
+});
 // =====================================
 // PROFILE SECTION =====================
 // =====================================
 // we will want this protected so you have to be logged in to visit
-// we will use route middleware to verify this (the isLoggedIn function)
+/* we will use route middleware to verify this (the isLoggedIn function)
 router.route('/profile').get(isLoggedIn, function(req, res) {
     userProfile = req.user;
     //console.log(req.user.google);
@@ -87,12 +68,13 @@ router.route('/profile').get(isLoggedIn, function(req, res) {
         user: req.user // get the user out of session and pass to template        
     });
     */
-});
-
+//});
+/*
 router.route('/getUserProfile').get(function(req, res) {
     console.log(userProfile);
     res.json(userProfile);
 });
+*/
 
 // route for facebook authentication and login
 router.route('/facebook').get(passport.authenticate('facebook', {
