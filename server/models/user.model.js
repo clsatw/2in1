@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
 
     local            : {
         email        : String,
-        password     : String
+        password     : {type: String, trim: true}
     },
     facebook         : {
         id           : String,
@@ -44,4 +44,5 @@ userSchema.methods.validPassword = function(password) {
 
 // create the model for users and expose it to our app
 // declare a model called users which has schema userSchema
+// here 'users' is our mongodb collection name
 module.exports = mongoose.model('users', userSchema);

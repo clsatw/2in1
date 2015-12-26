@@ -32,7 +32,7 @@ var opts = {
 // process the login form
 // app.post('/login', do all our passport stuff here);
 // call login strategy with login api
-router.post('/login', passport.authenticate('login', {
+router.post('/login', passport.authenticate('local-login', {
         successRedirect: baseUri + 'success', // redirect to the secure profile section
         failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
@@ -40,7 +40,7 @@ router.post('/login', passport.authenticate('login', {
 
 // process the signup form
 // app.post('/signup', do all our passport stuff here);
-router.post('/signup', passport.authenticate('signup', {
+router.post('/signup', passport.authenticate('local-signup', {
         successRedirect: baseUri + 'success', // redirect to the secure profile section
         failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
@@ -103,7 +103,7 @@ router.route('/google/callback').get(
 // LOGOUT ==============================
 // =====================================
 router.route('/logout').get(function(req, res) {
-    req.logout();
+    req.logout();   // func provided by passport
     res.redirect('/');  // back to store
 });
 

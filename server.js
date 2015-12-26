@@ -6,6 +6,8 @@ var config = require('./server/config/config'),
 	//bodyParser = require('body-parser'),   
 	express = require('express'),
 	morgan = require('morgan'),
+	cookieParser = require('cookie-parser');
+    bodyParser   = require('body-parser');
 	compress = require('compression'),	
 	mongoose = require('mongoose'),
 	methodOverride = require('method-override'),
@@ -25,6 +27,12 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
 	app.use(compress());
 }
+
+// set up our express application
+app.use(cookeiParser()); // read cookie (needed for auth)
+app.use(bodyParser()); // get info form htlm form
+
+
 
 //var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
 //app.use(bodyParser.urlencoded({extended: false}));
@@ -49,13 +57,15 @@ var prods = require('./server/routes/prods');
 var auth = require('./server/routes/auth')(passport);
 var paypal = require('./server/routes/paypal.js');
 
+// required for passport
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 // init passport
 var initPassport = require('./server/config/strategies/passport-init');
 initPassport(passport);
-
+// use connect-flash for flash msg stored in session
 app.use(flash());
+
 /*
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -63,6 +73,7 @@ app.use(function(req, res, next) {
   next();
 });
 */ 
+
 // do i need to insert bodyParser, urlencoded and cokkieParser here? figure it out
 app.use('/', express.static(__dirname + '/public'));
 // telling browser to cache it

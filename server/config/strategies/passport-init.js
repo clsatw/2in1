@@ -23,7 +23,7 @@ module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         // tell passport which id to use for user
-        done(null, user._id);
+        done(null, user.id);
     });
 
     // deserialize user will call with the unique id provided by serializeUser
@@ -146,7 +146,7 @@ module.exports = function(passport) {
     // =========================================================================
     // we are using named strategies since we have one for login and one for signup
     // by default, if there was no name, it would just be called 'local'
-    passport.use('signup', new LocalStrategy({
+    passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
@@ -197,7 +197,7 @@ module.exports = function(passport) {
 
         }));
 
-    passport.use('login', new LocalStrategy({
+    passport.use('local-login', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
