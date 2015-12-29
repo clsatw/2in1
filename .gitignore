@@ -1,6 +1,6 @@
 bower_components/
 /**/bower_components/*
-node_modeules/
+node_modules/
 *.log
 
 build/
