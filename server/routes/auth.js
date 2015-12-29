@@ -33,20 +33,29 @@ var opts = {
 // app.post('/login', do all our passport stuff here);
 // call login strategy with login api
 router.post('/login', passport.authenticate('local-login', {
-        successRedirect: baseUri + 'success', // redirect to the secure profile section
-        failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
+    function(req, res){
+        res.send(req.user);
+    }    
 }));
 
 // process the signup form
 // app.post('/signup', do all our passport stuff here);
+router.post('/signup',
+    passport.authenticate('local-signup'),
+    function(req, res){
+        res.send(req.user);
+    }    
+);
+/*
 router.post('/signup', passport.authenticate('local-signup', {
         successRedirect: baseUri + 'success', // redirect to the secure profile section
         failureRedirect: baseUri + 'failure', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
 }));
-    // sends successful Login state back to angular
+*/
+// sends successful Login state back to angular
 router.get('/success', function(req, res){
+    //console.log('go this far');
     res.send({state: 'success', user: req.user ? req.user : null});
 });
 // sends failure Login state back to angular

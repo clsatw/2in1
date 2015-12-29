@@ -10,10 +10,18 @@ var config = require('./server/config/config'),
     bodyParser   = require('body-parser');
 	compress = require('compression'),	
 	mongoose = require('mongoose'),
-	methodOverride = require('method-override'),
+	//methodOverride = require('method-override'),
 	session = require('express-session'),
 	passport = require('passport'),
 	flash = require('connect-flash');
+
+mongoose.connect(config.db, function(err) {
+	if(err) {
+        console.error('connection error', err);
+    } else {
+        console.log('connection successful');
+    }
+});
 
 var app = express();
 //require('./server/config/strategies/passport')(passport); // pass passport for configuration
@@ -29,14 +37,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // set up our express application
-app.use(cookeiParser()); // read cookie (needed for auth)
-app.use(bodyParser()); // get info form htlm form
-
-
+app.use(cookieParser()); // read cookie (needed for auth)
+app.use(bodyParser.urlencoded({extended: true})); // get info form htlm form
 
 //var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
 //app.use(bodyParser.urlencoded({extended: false}));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 //app.use(methodOverride());
 
 app.use(session({
@@ -87,13 +93,6 @@ app.use('/api/auth', auth);
 app.use('/api/prods', prods);
 app.use('/paypal', paypal);
 
-mongoose.connect(config.db, function(err) {
-	if(err) {
-        console.error('connection error', err);
-    } else {
-        console.log('connection successful');
-    }
-});
 
 app.listen(config.port, function(req, res) {
 	console.info('Server running at http://localhost: ' + config.port);

@@ -5,17 +5,23 @@ angular.module("app")
     $scope.user = {email: '', password: ''};
 
     $scope.login = function(){
-    	$http.post('api/auth/login', $scope.user).success(function(data){
+    	return $http.post('api/auth/login', $scope.user).success(function(data){
     		$rootScope.auth = true;
     		$rootScope.current_user = data.local.email; // from mongodb    		
     		$location.path('/');
     	});
     }
     $scope.signup = function(){
-    	$http.post('api/auth/signup', $scope.user).success(function(data){
-    		$rootScope.auth = true;
-    		$rootScope.current_user = data.local.email; // from mongodb
-    		$location.path('/');
+        // $http post has to be like this; otherwise, node will return 400
+    	return $http({
+            method: 'POST',
+            url: 'api/auth/signup',            
+            data: {
+                email: $scope.user.email,
+                password: $scope.user.password}
+            }).success(function(data) {
+                $rootScope.auth = true;
+    		    $rootScope.current_user = data.local.email; // from mongodb    		
     	});
     }
     /*

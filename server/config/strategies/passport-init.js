@@ -2,7 +2,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var DropboxOAuth2Strategy = require('passport-dropbox-oauth2').Strategy;
+
 // load up the user model
 var User = require('../../models/user.model');
 
@@ -23,19 +23,21 @@ module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         // tell passport which id to use for user
-        done(null, user.id);
+        // user.id or user._id (i need to figure it out)
+        done(null, user._id);
     });
 
     // deserialize user will call with the unique id provided by serializeUser
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
-            if(err)
-               return done(err, false);
-            if(!user){
-                return done('user not found', false);
-            }
+            //if(err)
+            //   return done(err, false);
+            //if(!user){
+            //    return done('user not found', false);
+            //}
             // we found the user object provide it back to passport
-            return done(user, true);
+            //return done(user, true);
+            done(err, user);
         });
     });
     // =========================================================================
@@ -152,45 +154,38 @@ module.exports = function(passport) {
             passwordField: 'password',
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
-        function(req, email, password, done) {  // call back func
+        function(res, email, password, done) {  // call back func
             console.log(email);
-            // asynchronous
-            // User.findOne wont fire unless data is sent back
-            //process.nextTick(function() {
-
+      
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
                
                 User.findOne({'local.email': email}, function(err, user) {
-                    // if there are any errors, return the error
-                    console.log(email);
+                    // if there are any errors, return the error                    
                     if (err){
                         console.log(err);
                         return done(err, false);
                     }
-
+                    //console.log(user);
                     // check to see if theres already a user with that email
-                    if (user) {
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } else {
-
+                    if (user)                         
+                        return done('email already taken', false);
+                    
                         // if there is no user with that email
                         // create the user
-                        var newUser = new User();
+                    var newUser = new User();
+                    // set the user's local credentials
+                    newUser.local.email = email;
+                    newUser.local.password = newUser.generateHash(password);
 
-                        // set the user's local credentials
-                        newUser.local.email = email;
-                        newUser.local.password = newUser.generateHash(password);
-
-                        // save the user
-                        newUser.save(function(err, newUser) {
-                            if (err)
-                                return don(err, false);
-                            console.log('successfully signed up user ' + email);
-                            return done(null, newUser);
-                        });
-                    }
-
+                    // save the user
+                    newUser.save(function(err, newUser) {
+                        if (err) {                            
+                            return done(err, false, {message: 'failed to save newUser'});
+                        }
+                        console.log('successfully signed up user ' + email);
+                        return done(null, newUser);
+                    });
                 });
 
             //});
@@ -214,11 +209,11 @@ module.exports = function(passport) {
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, req.flash('loginMessage', 'user not found')); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, {message: 'Incorrect email'}); // req.flash is the way to set flashdata using connect-flash
 
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'invalid password')); // create the loginMessage and save it to session as flashdata
+                    return done(null, false, {message: 'invalid password'}); // create the loginMessage and save it to session as flashdata
 
                 // all is well, return successful user
                 return done(null, user);
