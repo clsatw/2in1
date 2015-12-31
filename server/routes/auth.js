@@ -15,11 +15,6 @@ var opts = {
     successRedirect: baseUri + 'success',
     failureRedirect: baseUri + 'failure'        
 }
-// configure app
-//var bodyParser = require('body-parser');
-//var parseUrlencoded = bodyParser.urlencoded({
-//extended: false
-//});
 
 // =====================================
 // HOME PAGE (with login links) ========
@@ -29,17 +24,14 @@ var opts = {
     //res.render('auth.ejs');
 //});
 
-// process the login form
-// app.post('/login', do all our passport stuff here);
 // call login strategy with login api
-router.post('/login', passport.authenticate('local-login', {
+router.post('/login', 
+    passport.authenticate('local-login'), 
     function(req, res){
         res.send(req.user);
     }    
-}));
+);
 
-// process the signup form
-// app.post('/signup', do all our passport stuff here);
 router.post('/signup',
     passport.authenticate('local-signup'),
     function(req, res){
@@ -62,28 +54,6 @@ router.get('/success', function(req, res){
 router.get('/failure', function(req, res){
     res.send({state: 'failure', user: null, message: 'Invalid username or password'});
 });
-// =====================================
-// PROFILE SECTION =====================
-// =====================================
-// we will want this protected so you have to be logged in to visit
-/* we will use route middleware to verify this (the isLoggedIn function)
-router.route('/profile').get(isLoggedIn, function(req, res) {
-    userProfile = req.user;
-    //console.log(req.user.google);
-    //res.sendFile(__dirname + '/profile.html');  // __driname = routers
-    res.redirect('/#/getUserProfile');
-    /*
-    res.render('profile.html', {
-        user: req.user // get the user out of session and pass to template        
-    });
-    */
-//});
-/*
-router.route('/getUserProfile').get(function(req, res) {
-    console.log(userProfile);
-    res.json(userProfile);
-});
-*/
 
 // route for facebook authentication and login
 router.route('/facebook').get(passport.authenticate('facebook', {

@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // set up our express application
 app.use(cookieParser()); // read cookie (needed for auth)
-app.use(bodyParser.urlencoded({extended: true})); // get info form htlm form
+app.use(bodyParser.urlencoded({extended: false})); // get info form htlm form
 
 //var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
 //app.use(bodyParser.urlencoded({extended: false}));
@@ -93,6 +93,11 @@ app.use('/api/auth', auth);
 app.use('/api/prods', prods);
 app.use('/paypal', paypal);
 
+app.use(logErrors);
+function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+}
 
 app.listen(config.port, function(req, res) {
 	console.info('Server running at http://localhost: ' + config.port);
