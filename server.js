@@ -5,14 +5,18 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';	// has to be befor
 var config = require('./server/config/config'),
 	//bodyParser = require('body-parser'),   
 	express = require('express'),
-	morgan = require('morgan'),
+	logger = require('morgan'),
 	cookieParser = require('cookie-parser');
     bodyParser   = require('body-parser');
 	compress = require('compression'),	
 	mongoose = require('mongoose'),
+	// may be i should use multer - figure it out later
 	//methodOverride = require('method-override'),
 	session = require('express-session'),
 	passport = require('passport'),
+	path = require('path'),	
+	favicon = require('serve-favicon'),
+	errorHandler = require('errorhandler'),
 	flash = require('connect-flash');
 
 mongoose.connect(config.db, function(err) {
@@ -31,17 +35,19 @@ var app = express();
 
 if (process.env.NODE_ENV === 'development') {
 	// logging request details
-	app.use(morgan('dev'));
+	app.use(logger('dev'));
+	app.use(errorHandler());
 } else if (process.env.NODE_ENV === 'production') {
 	app.use(compress());
 }
 
+app.use(favicon(__dirname + '/public/favicon.ico'));
 // set up our express application
 app.use(cookieParser()); // read cookie (needed for auth)
-app.use(bodyParser.urlencoded({extended: false})); // get info form htlm form
+// app.use(bodyParser.urlencoded({extended: false})); // get info form htlm form
 
 //var parseUrlEncoded = bodyParser.urlencoded({ extended: false });
-//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 //app.use(methodOverride());
 
@@ -52,8 +58,7 @@ app.use(session({
 }));
 
 // view engine setup
-app.set('views', './views');
-//app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // uncomment after placing your favicon in /public
 // app.use(facicon(__dirname + '/public/favicon.ico'));
@@ -81,7 +86,7 @@ app.use(function(req, res, next) {
 */ 
 
 // do i need to insert bodyParser, urlencoded and cokkieParser here? figure it out
-app.use('/', express.static(__dirname + '/public'));
+app.use('/', express.static(path.join(__dirname, 'public')));
 // telling browser to cache it
 app.use('/', function(req, res, next) {
 	res.setHeader('Cache-Control', 'public, max-age=31536000');

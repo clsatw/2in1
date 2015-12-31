@@ -6,7 +6,7 @@
 
 /* code school */
 body {
-	font-size: 14px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	padding: 20px 20px 20px 20px;
 	padding-top: 70px;
 }
@@ -67,6 +67,10 @@ footer {
 	font-size: 12px;
 	font-style: italic;
 	text-transform: uppercase;
+}
+
+a {
+  color: #00B7FF;
 }
 /*
 input {
