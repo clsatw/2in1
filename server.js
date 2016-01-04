@@ -2,24 +2,29 @@
 // port defined in server/config/env/*.js file
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';	// has to be before config coz config reads it
-var config = require('./server/config/config'),
-	//bodyParser = require('body-parser'),   
-	express = require('express'),
-	logger = require('morgan'),
-	cookieParser = require('cookie-parser');
-    bodyParser   = require('body-parser');
-	compress = require('compression'),	
-	mongoose = require('mongoose'),
+var config = require('./server/config/config');	
+var express = require('express');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var	compress = require('compression');	
+var	mongoose = require('mongoose');
 	// may be i should use multer - figure it out later
 	//methodOverride = require('method-override'),
-	session = require('express-session'),
-	passport = require('passport'),
-	path = require('path'),	
-	favicon = require('serve-favicon'),
-	errorHandler = require('errorhandler'),
-	flash = require('connect-flash');
+var	session = require('express-session');
+var	passport = require('passport');
+var	path = require('path');	
+var	favicon = require('serve-favicon');
+var	errorHandler = require('errorhandler');
+var	flash = require('connect-flash');
 
-mongoose.connect(config.db, function(err) {
+// for routing
+var prods = require('./server/routes/prods');
+// here we pass in passport as the param, so there is no need to require passport in auth.js
+var auth = require('./server/routes/auth')(passport);
+var paypal = require('./server/routes/paypal');
+
+mongoose.connect(config.db, {safe: true}, function(err) {
 	if(err) {
         console.error('connection error', err);
     } else {
@@ -63,10 +68,7 @@ app.set('views', path.join(__dirname, 'views'));
 // uncomment after placing your favicon in /public
 // app.use(facicon(__dirname + '/public/favicon.ico'));
 
-var prods = require('./server/routes/prods');
-// here we pass in passport as the param, so there is no need to require passport in auth.js
-var auth = require('./server/routes/auth')(passport);
-var paypal = require('./server/routes/paypal.js');
+
 
 // required for passport
 app.use(passport.initialize());
@@ -98,11 +100,36 @@ app.use('/api/auth', auth);
 app.use('/api/prods', prods);
 app.use('/paypal', paypal);
 
-app.use(logErrors);
-function logErrors(err, req, res, next) {
-  console.error(err.stack);
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
   next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 app.listen(config.port, function(req, res) {
 	console.info('Server running at http://localhost: ' + config.port);

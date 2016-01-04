@@ -8,7 +8,8 @@ var userSchema = new mongoose.Schema({
 
     local            : {
         email        : String,
-        password     : String,
+        password     : String,    
+        created_at   : { type: Date, default: Date.now}
     },
     facebook         : {
         id           : String,
@@ -36,7 +37,17 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
+/*
+var validator = require('validator');
+User.schema.path('email').validate(function(email) {
+return validator.isEmail(email);
+});
+User.schema.path('password').validate(function(password) {
+return validator.isLength(password, 6);
+});
+*/
 // create the model for users and expose it to our app
 // declare a model called users which has schema userSchema
 // here 'users' is our mongodb collection name
-module.exports = mongoose.model('users', userSchema);
+var User = mongoose.model('users', userSchema);
+module.exports = User;
