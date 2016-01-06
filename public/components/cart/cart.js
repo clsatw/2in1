@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module("app.cart", [])
-.factory("cartService", function () {
-    var myCart = new Cart('myStore');
+.factory("cartService", function ($window) {
+    var myCart = new Cart('myStore', $window);
      // enable PayPal checkout
     // note: the second parameter identifies the merchant; in order to use the 
     // shopping cart with PayPal, you have to create a merchant account with 
@@ -18,6 +18,7 @@ angular.module("app.cart", [])
         restrict: "A",
         controller: function($scope, $http) {
             $scope.cart = cartService.cart;  
+            $scope.cBouce='';
                       
             $scope.sendPost = function() {
                 var data = $scope.cart.cartData;

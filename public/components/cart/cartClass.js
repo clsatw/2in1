@@ -1,10 +1,12 @@
 //----------------------------------------------------------------
 // shopping cart constructor
 //
- function Cart(cartName) {
+ function Cart(cartName, $win) {
+    var win = $win;
     this.cartName = cartName;
     this.clearCart = false;
     this.checkoutParameters = {};
+    this.cBounceIn =false;
     this.cartData = [];
 
     // load items from local storage when initializing
@@ -13,7 +15,8 @@
     // save items to local storage when unloading
     var self = this;
     // angular.element(window).on('unload', function () {
-    $(window).unload(function () {
+    angular.element(win).on('unload', function(){
+    //$(window).unload(function () {
         if (self.clearCart) {
             self.clearItems();
         }
@@ -53,6 +56,7 @@ Cart.prototype.saveCartData = function() {
 
 // adds an item to the cart
 Cart.prototype.addItemToCart = function(id, name, price) {
+        this.cBounceIn = !this.cBounceIn;
         var addedToExistingItem = false;
         var i;
         for (i = 0; i < this.cartData.length; i++) {
@@ -69,7 +73,7 @@ Cart.prototype.addItemToCart = function(id, name, price) {
             });
         }
         // save changes to local storage
-        this.saveCartData();
+        this.saveCartData();        
 }
 
 Cart.prototype.removeItem = function(id) {
