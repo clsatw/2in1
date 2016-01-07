@@ -6,7 +6,7 @@
     this.cartName = cartName;
     this.clearCart = false;
     this.checkoutParameters = {};
-    this.cBounceIn =false;
+    this.isCartGetUpdated =false;
     this.cartData = [];
 
     // load items from local storage when initializing
@@ -49,14 +49,14 @@ Cart.prototype.loadCartData = function () {
 }
 // save items to local storage (data will still exist if )
 Cart.prototype.saveCartData = function() {
+    this.isCartGetUpdated = !this.isCartGetUpdated;
     if (localStorage != null && JSON != null) {
         localStorage[this.cartName + "_items"] = JSON.stringify(this.cartData);
     }
 }
 
 // adds an item to the cart
-Cart.prototype.addItemToCart = function(id, name, price) {
-        this.cBounceIn = !this.cBounceIn;
+Cart.prototype.addItemToCart = function(id, name, price) {        
         var addedToExistingItem = false;
         var i;
         for (i = 0; i < this.cartData.length; i++) {
@@ -76,7 +76,7 @@ Cart.prototype.addItemToCart = function(id, name, price) {
         this.saveCartData();        
 }
 
-Cart.prototype.removeItem = function(id) {
+Cart.prototype.removeItem = function(id) {   
     for (var i = 0; i < this.cartData.length; i++) {
         if (this.cartData[i].id == id) {
             this.cartData.splice(i, 1);
@@ -112,7 +112,7 @@ Cart.prototype.isItInCart = function (sku) {
 }   
 
 // clear the cart
-Cart.prototype.emptyCart = function() {
+Cart.prototype.emptyCart = function() {    
     this.cartData = [];
     this.saveCartData();    // save to local storage
 }

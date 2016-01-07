@@ -8,7 +8,7 @@
 		{{cart.getTotalPrice() | currency}}
 	</div>
 	
-	<a href='#/cart' class="btn btn-danger btn-lg" ng-class="{'animated flipInX': !cart.cBounceIn, 'animated flipInY': cart.cBounceIn}">
+	<a href='#/cart' class="btn btn-danger btn-lg" ng-class="{'animated flipInX': !cart.isCartGetUpdated, 'animated flipInY': cart.isCartGetUpdated}">
 		<span class="glyphicon glyphicon-shopping-cart"></span>
 	<span class='badge'>{{cart.getItemCount()}} item(s)</span></a>	
 </div>
