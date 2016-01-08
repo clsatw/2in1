@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var	compress = require('compression');	
 var	mongoose = require('mongoose');
+var nodemailer = require('nodemailer');
 	// may be i should use multer - figure it out later
 	//methodOverride = require('method-override'),
 var	session = require('express-session');
@@ -19,10 +20,10 @@ var	errorHandler = require('errorhandler');
 var	flash = require('connect-flash');
 
 // for routing
-var prods = require('./server/routes/prods');
+var prods = require('./server/routes/prods')();
 // here we pass in passport as the param, so there is no need to require passport in auth.js
 var auth = require('./server/routes/auth')(passport);
-var paypal = require('./server/routes/paypal');
+var paypal = require('./server/routes/paypal')();
 
 var app = express();
 

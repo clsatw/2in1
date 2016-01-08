@@ -1,0 +1,36 @@
+<nav class="navbar navbar-static-top navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" ng-href="#/">
+        <span class="glyphicon glyphicon-home"></span> Markie Store
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+      <ul class="nav navbar-nav">
+        <li class="active"><a ng-href="#">Home</a></li>
+        <li><a ng-href="#">About</a></li>
+        <li><a ng-href="#">Contact</a></li>
+        <li><a ng-href="#/auth"><span class="glyphicon glyphicon-log-in"></span> Log in
+                </a></li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right acme-navbar-text">
+        <li>Application was created {{ vm.relativeDate }}.</li>
+        <li><span cart='Summary'></span></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+ <div class="animated flipInX navbar navbar-default navbar-fixed-top">
+                <a class="text-info animated flip navbar-brand" ng-href="#/"><b class='text-primary'>MARKIE STORE</b></a>
+                <p class='navbar-text'> Welcome to my store</p>
+                <p class='navbar-right navbar-text'><a href="#/auth" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-log-in"></span> Log in
+                </a></p>                 
+                  <p class='navbar-right navbar-text' ng-show='auth'>Signed in as {{current_user}}</p>
+                  <p class='navbar-right navbar-text' ng-show='auth'><a href="#" ng-click='logout()'class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> Log out</a></p>
+                <p class='navbar-right navbar-text'><span cart='Summary'></span></p>
+            </div>

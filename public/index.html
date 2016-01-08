@@ -10,16 +10,16 @@
         <script src="./bower_components/angular-animate/angular-animate.js"></script>
         <script src="./bower_components/angular-route/angular-route.js"></script>
         <script src="./bower_components/angular-resource/angular-resource.js"></script>
-       
+        
         <!--
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <script type="text/javascript">
-            Stripe.setPublishableKey('pk_test_p0QQDCeJQA7W9X9y0VP7QOz5');
+        Stripe.setPublishableKey('pk_test_p0QQDCeJQA7W9X9y0VP7QOz5');
         </script>
-         <script src='./bower_components/angular-payments/lib/angular-payments.js'></script> 
-        animate.css https://daneden.github.io/animate.css/          
-        -->       
-       
+        <script src='./bower_components/angular-payments/lib/angular-payments.js'></script>
+        animate.css https://daneden.github.io/animate.css/
+        -->
+        
         <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
         <link href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
         <link rel='stylesheet' href='./css/animate.min.css'>
@@ -34,40 +34,51 @@
         <script src="./components/cart/cart.js"></script>
         <script src="./controllers/auth.ctrl.js"></script>
         <script src="./controllers/prodDetail.ctrl.js"></script>
-      
+        
     </head>
     <body ng-app='app' ng-controller='StoreCtrl'>
-        <header class='container'>
-            <div class="animated flipInX navbar navbar-default navbar-fixed-top">
-                <a class="text-info animated flip navbar-brand" ng-href="#/"><b class='text-primary'>MARKIE STORE</b></a>
-                <p class='navbar-text'> Welcome to my store</p>
-                <p class='navbar-right navbar-text'><a href="#/auth" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-log-in"></span> Log in
-                </a></p>                 
-                  <p class='navbar-right navbar-text' ng-show='auth'>Signed in as {{current_user}}</p>
-                  <p class='navbar-right navbar-text' ng-show='auth'><a href="#" ng-click='logout()'class="btn btn-success"><span class="glyphicon glyphicon-log-out"></span> Log out</a></p>
-                <p class='navbar-right navbar-text'><span cart='Summary'></span></p>
+      
+            <nav class="navbar navbar-static-top navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" ng-href="#/">
+                            <span class="glyphicon glyphicon-home"></span> Markie Store
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a ng-href="#">Home</a></li>
+                            <li><a ng-href="#">About</a></li>
+                            <li><a ng-href="#">Contact</a></li>
+                            <li><a ng-href="#/auth"><span class="glyphicon glyphicon-log-in"></span> Log in
+                        </a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right acme-navbar-text">
+                        <li>Application was created {{ vm.relativeDate }}.</li>
+                        <li><span cart='Summary'></span></li>
+                    </ul>
+                </div>
             </div>
-        </header>
-
-        <!-- col-md-offset-2 col-md-8 -->
-        <section class='container'>        
-            <div class="alert alert-danger" ng-show="data.error">
-                Error ({{data.error.status}}). The product data was not loaded.
-                <a href="/index.html" class="alert-link">Click here to try again</a>
-            </div>       
-            <div ng-view class="ngFade"></div>            
-        </section>
-
-        <footer class='container'>
-            <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>
-            <address>
-                <strong>Immortal Roach, Inc.</strong><br>
-            <abbr title="Phone">P:</abbr> (123) 456-7890
-        </address>
+        </nav>
+   
+    <!-- col-md-offset-2 col-md-8 -->
+    <section class='container'>
+        <div class="alert alert-danger" ng-show="data.error">
+            Error ({{data.error.status}}). The product data was not loaded.
+            <a href="/index.html" class="alert-link">Click here to try again</a>
+        </div>
+        <div ng-view class="ngFade"></div>
+    </section>
+    <footer class='container'>
+        <p>This site is hosted by Nodejs. &copy; 2015 - Markie Store</p>
         <address>
-            <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
-        </address>
-    </footer>
-                  
+            <strong>Immortal Roach, Inc.</strong><br>
+        <abbr title="Phone">P:</abbr> (123) 456-7890
+    </address>
+    <address>
+        <strong>Mark Huang </strong><a href="mailto:#">roach.huang@hotmail.com</a>
+    </address>
+</footer>
+
 </body>
 </html>
